@@ -1,0 +1,17 @@
+@use '../global' as g;
+
+html, body {
+  height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: g.$font-sans;
+  line-height: 1.6;
+  color: g.$color-light;
+  background-color: g.$color-dark;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
