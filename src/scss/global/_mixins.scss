@@ -1,1 +1,15 @@
-// レスポンシブ用のメディアクエリなどをここに書いていく
+@use 'sass:map';
+@use 'variables' as v;
+
+// レスポンシブ用のmixin
+@mixin mq($breakpoint) {
+  // もし指定された名前がマップの中にあったら
+  @if map.has-key(v.$breakpoints, $breakpoint) {
+    // その値を取り出してメディアクエリを作成
+    @media #{map.get(v.$breakpoints, $breakpoint)} {
+      @content;
+    }
+  } @else {
+    @error "指定されたブレイクポイント「#{$breakpoint}」は定義されていません。";
+  }
+}
