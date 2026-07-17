@@ -1,5 +1,9 @@
 @use '../global' as g;
 
+html {
+  font-size: 62.5%;
+}
+
 html, body {
   height: 100%;
 }
@@ -7,6 +11,7 @@ html, body {
 body {
   overflow-x: hidden;
   font-family: g.$font-sans;
+  font-size: 1.4rem;
   line-height: 1.6;
   color: g.$color-light;
   background-color: g.$color-dark;
