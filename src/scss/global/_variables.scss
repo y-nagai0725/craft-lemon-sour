@@ -6,8 +6,20 @@ $color-light: #fcfaf2; // 優しいオフホワイト（テキスト用）
 // フォント変数
 $font-sans: "Zen Maru Gothic", "M PLUS Rounded 1c", sans-serif;
 
+// font-weight
+$font-bold: 700;
+
 // ブレイクポイント
 $breakpoints: (
   'md': '(width >= 768px)',  // 768px以上（PC・タブレット用）
   'lg': '(width >= 1024px)'  // 1024px以上（より大きな画面用）
 );
+
+// Transition関連
+$transition-duration: 0.3s;
+$transition-easing: ease-out;
+
+// z-index TODO 随時追加していく
+$z-index-header: 100;
+$z-index-nav: 105;
+$z-index-hamburger: 110;

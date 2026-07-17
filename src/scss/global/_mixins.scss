@@ -1,5 +1,5 @@
-@use 'sass:map';
-@use 'variables' as v;
+@use "sass:map";
+@use "variables" as v;
 
 // レスポンシブ用のmixin
 @mixin mq($breakpoint) {
@@ -11,5 +11,14 @@
     }
   } @else {
     @error "指定されたブレイクポイント「#{$breakpoint}」は定義されていません。";
+  }
+}
+
+// hover用のmixin
+@mixin hover {
+  @media (any-hover: hover) {
+    &:hover {
+      @content;
+    }
   }
 }
