@@ -1,5 +1,11 @@
 @use '../global' as g;
 
+// ページ読み込み時はすべてのアニメーションを強制ストップ
+.preload * {
+  transition: none !important;
+  animation: none !important;
+}
+
 html {
   font-size: 62.5%;
 }
