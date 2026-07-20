@@ -1,5 +1,6 @@
 import '../scss/style.scss';
 import { initHeader } from './modules/header.js';
+import { initFv } from './modules/fv.js';
 
 // すべての読み込みと描画準備が完了したら、preloadクラスを外してアニメーションを解禁する
 window.addEventListener('load', () => {
@@ -9,6 +10,7 @@ window.addEventListener('load', () => {
 // 処理をまとめて実行する初期化関数
 const init = () => {
   initHeader();
+  initFv();
 };
 
 // 初期化を実行

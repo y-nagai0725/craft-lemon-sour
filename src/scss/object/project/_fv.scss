@@ -1,0 +1,151 @@
+@use "../../global" as g;
+
+.p-fv {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  height: 100svh; // スマホのブラウザバー対策
+  overflow: hidden;
+  background-color: g.$color-dark;
+
+  &__inner {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    padding: 0 2rem;
+    margin: 0 auto;
+  }
+
+  &__text-wrap {
+    position: relative;
+    z-index: 30; // テキストは一番手前
+    color: g.$color-light;
+    text-align: center;
+  }
+
+  &__catch {
+    margin-bottom: 1.6rem;
+    font-size: 1.6rem;
+    font-weight: g.$font-bold;
+
+    @include g.mq(md) {
+      font-size: 2rem;
+    }
+  }
+
+  &__title {
+    font-size: 3.2rem;
+    font-weight: g.$font-bold;
+    line-height: 1.2;
+    color: g.$color-primary;
+
+    @include g.mq(md) {
+      font-size: 6rem;
+    }
+  }
+
+  /* ------------------------------
+    ダミー画像パーツ群
+  ------------------------------ */
+  &__images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; // クリック判定を無くす
+  }
+
+  // GSAP登場アニメ用の外枠
+  &__item-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__item {
+    position: absolute;
+    border-radius: 8px;
+
+    // 奥の要素（氷やミントを想定）
+    &--back1 {
+      top: 20%;
+      left: 15%;
+      z-index: 5;
+      width: 100px;
+      height: 100px;
+      background-color: rgb(255 255 255 / 20%); // 半透明の白
+
+      // PC版：少し大きくして、左上の奥の方に配置
+      @include g.mq(md) {
+        top: 15%;
+        left: 10%;
+        width: 150px;
+        height: 150px;
+      }
+    }
+
+    // 主役のグラス
+    &--main {
+      top: 50%;
+      left: 50%;
+      z-index: 10;
+      width: 250px;
+      height: 400px;
+      background-color: rgb(249 216 84 / 40%); // 半透明のレモン色
+      transform: translate(-50%, -50%);
+
+      // PC版：大きくして、存在感をアピール
+      @include g.mq(md) {
+        width: 350px;
+        height: 550px;
+      }
+    }
+
+    // 手前の要素（レモンスライスなどを想定）
+    &--front1 {
+      right: 20%;
+      bottom: 15%;
+      z-index: 20;
+      width: 150px;
+      height: 150px;
+      background-color: rgb(249 216 84 / 80%); // 濃いレモン色
+
+      // PC版：大きくして、右下の空間を埋めるように配置
+      @include g.mq(md) {
+        right: 15%;
+        bottom: 10%;
+        width: 250px;
+        height: 250px;
+      }
+    }
+
+    // さらに手前の要素（小さめの果肉や水滴などを想定）
+    &--front2 {
+      bottom: 30%;
+      left: 25%;
+      z-index: 20;
+      width: 80px;
+      height: 80px;
+      background-color: rgb(255 255 255 / 80%); // 濃い白
+
+      // PC版：左下の少し内側にアクセントとして配置
+      @include g.mq(md) {
+        bottom: 25%;
+        left: 20%;
+        width: 120px;
+        height: 120px;
+      }
+    }
+  }
+}
