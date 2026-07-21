@@ -20,6 +20,14 @@ $transition-duration: 0.3s;
 $transition-easing: ease-out;
 
 // z-index TODO 随時追加していく
+$z-index-back: -1;
+$z-index-default: 1;
 $z-index-header: 100;
 $z-index-nav: 105;
 $z-index-hamburger: 110;
+$z-index-fv-image-back: 5;
+$z-index-fv-inner: 10;
+$z-index-fv-image-main: 15;
+$z-index-fv-image-front-1: 20;
+$z-index-fv-image-front-2: 25;
+$z-index-fv-text: 30;
