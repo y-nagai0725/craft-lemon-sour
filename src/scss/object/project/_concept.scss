@@ -1,0 +1,86 @@
+@use "../../global" as g;
+
+.p-concept {
+  position: relative;
+  overflow: hidden;
+  background-color: g.$color-dark;
+
+  &__inner {
+    position: relative;
+    max-width: 120rem;
+    padding: 10rem 2rem;
+    margin: 0 auto;
+
+    @include g.mq(md) {
+      display: flex;
+      align-items: flex-start; // ボトルを上基準で配置
+      justify-content: space-between;
+      padding: 15rem 4rem;
+    }
+  }
+
+  // ボトル画像エリア
+  &__image-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 4rem;
+
+    @include g.mq(md) {
+      width: 45%;
+      margin-bottom: 0;
+    }
+  }
+
+  &__image {
+    width: auto;
+    height: calc(100svh - g.$header-height-sp);
+
+    @include g.mq(md){
+      height: calc(100svh - g.$header-height-pc);
+    }
+  }
+
+  // テキストエリア
+  &__text-wrap {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 12rem;
+    color: g.$color-light;
+    text-align: center;
+
+    @include g.mq(md) {
+      gap: 25rem;
+      width: 50%;
+      text-align: left;
+    }
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+
+  &__title {
+    font-size: 2.8rem;
+    font-weight: g.$font-bold;
+    line-height: 1.4;
+    color: g.$color-primary;
+
+    @include g.mq(md) {
+      font-size: 4rem;
+    }
+  }
+
+  &__desc {
+    font-size: 1.6rem;
+    line-height: 1.8;
+
+    @include g.mq(md) {
+      font-size: 1.8rem;
+    }
+  }
+}
