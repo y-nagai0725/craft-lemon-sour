@@ -8,52 +8,52 @@
   &__inner {
     position: relative;
     max-width: 120rem;
-    padding: 10rem 2rem;
+    padding: 0 2rem;
     margin: 0 auto;
 
     @include g.mq(md) {
       display: flex;
-      align-items: flex-start; // ボトルを上基準で配置
+      align-items: flex-start;
       justify-content: space-between;
-      padding: 15rem 4rem;
+      padding: 0 4rem;
     }
   }
 
   // ボトル画像エリア
   &__image-wrap {
     display: flex;
+    align-items: center;
     justify-content: center;
     width: 100%;
-    margin-bottom: 4rem;
+    height: calc(100svh - g.$header-height-sp);
 
     @include g.mq(md) {
       width: 45%;
-      margin-bottom: 0;
+      height: calc(100svh - g.$header-height-pc);
     }
   }
 
   &__image {
     width: auto;
-    height: calc(100svh - g.$header-height-sp);
-
-    @include g.mq(md){
-      height: calc(100svh - g.$header-height-pc);
-    }
+    height: 90%;
   }
 
   // テキストエリア
   &__text-wrap {
     position: relative;
-    z-index: 10;
+    z-index: g.$z-index-default;
     display: flex;
     flex-direction: column;
     gap: 12rem;
+    padding-bottom: 30vh; // 最後のテキストが通り過ぎるまでの余白
     color: g.$color-light;
     text-align: center;
 
     @include g.mq(md) {
       gap: 25rem;
       width: 50%;
+      padding-top: 50vh; // 最初のテキストが下から出てくるまでの余白
+      padding-bottom: 50vh; // 最後のテキストが通り過ぎるまでの余白
       text-align: left;
     }
   }
@@ -62,6 +62,18 @@
     display: flex;
     flex-direction: column;
     gap: 2.4rem;
+
+    // SP時のみ、すりガラスのような背景を敷いて視認性を高める
+    padding: 2.4rem 0;
+    background-color: rgba(g.$color-dark, 0.33); // 半透明のダークネイビー
+    backdrop-filter: blur(0.3rem); // 後ろのボトルをぼかす
+
+    @include g.mq(md) {
+      // PC時は必要ないのでリセットする
+      padding: 0;
+      background-color: transparent;
+      backdrop-filter: none;
+    }
   }
 
   &__title {
@@ -69,6 +81,7 @@
     font-weight: g.$font-bold;
     line-height: 1.4;
     color: g.$color-primary;
+    text-shadow: g.$text-shadow-title;
 
     @include g.mq(md) {
       font-size: 4rem;
@@ -78,6 +91,7 @@
   &__desc {
     font-size: 1.6rem;
     line-height: 1.8;
+    text-shadow: g.$text-shadow-text;
 
     @include g.mq(md) {
       font-size: 1.8rem;
