@@ -1,0 +1,121 @@
+@use "../../global" as g;
+
+.p-process {
+  position: relative;
+  padding: 10rem 0;
+  overflow: hidden;
+  color: g.$color-light;
+  background-color: g.$color-dark;
+
+  @include g.mq(md) {
+    padding: 20rem 0;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 8rem;
+    max-width: 120rem;
+    padding: 0 2rem;
+    margin: 0 auto;
+
+    @include g.mq(md) {
+      flex-direction: row;
+      gap: 6rem;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4rem;
+    }
+  }
+
+  /* ------------------------------
+    テキストエリア
+  ------------------------------ */
+  &__text-wrap {
+    width: 100%;
+
+    @include g.mq(md) {
+      width: 45%;
+    }
+  }
+
+  &__title {
+    margin-bottom: 3.2rem;
+    font-size: 2.8rem;
+    font-weight: g.$font-bold;
+    line-height: 1.4;
+    color: g.$color-primary;
+
+    @include g.mq(md) {
+      font-size: 4rem;
+    }
+  }
+
+  &__lead {
+    margin-bottom: 2.4rem;
+    font-size: 1.8rem;
+    font-weight: g.$font-bold;
+    line-height: 1.6;
+
+    @include g.mq(md) {
+      font-size: 2.2rem;
+    }
+  }
+
+  &__desc {
+    font-size: 1.6rem;
+    line-height: 1.8;
+  }
+
+  /* ------------------------------
+    コラージュ画像エリア
+  ------------------------------ */
+  &__images {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+
+    @include g.mq(md) {
+      width: 50%;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  &__image-wrap {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 1.6rem;
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 30%);
+
+    // それぞれの画像をズラして配置
+    &--lemon {
+      top: 0;
+      right: 0;
+      z-index: 3;
+      width: 60%;
+      aspect-ratio: 3 / 4; // 縦長にトリミング
+    }
+
+    &--mugi {
+      bottom: 10%;
+      left: 0;
+      z-index: 2;
+      width: 55%;
+      aspect-ratio: 1 / 1; // 正方形にトリミング
+    }
+
+    &--taru {
+      right: 10%;
+      bottom: 0;
+      z-index: 1;
+      width: 50%;
+      aspect-ratio: 4 / 3; // 横長にトリミング
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
