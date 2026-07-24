@@ -147,22 +147,51 @@
         </div>
       </section>
 
-      <section id="lineup" class="p-lineup">
-        <div class="p-lineup__inner">
+      <section id="lineup" class="p-lineup js-lineup-trigger">
+        <!-- 固定（Pin）される枠 -->
+        <div class="p-lineup__inner js-lineup-pin">
+
           <h2 class="p-lineup__title">3つのこだわりフレーバー</h2>
-          <div class="p-lineup__list">
+
+          <!-- このレールごとGSAPで左にスライドさせる -->
+          <div class="p-lineup__track js-lineup-track">
+
+            <!-- 1. Standard -->
             <div class="p-lineup__item">
-              <h3 class="p-lineup__item-title">Standard</h3>
-              <p class="p-lineup__item-desc">王道のスッキリとしたレモン感。</p>
+              <div class="p-lineup__image-wrap">
+                <img class="p-lineup__image" src="src/assets/images/lineup/lineup-standard.png" alt="Standard"
+                  width="330" height="970">
+              </div>
+              <div class="p-lineup__text-wrap">
+                <h3 class="p-lineup__item-title">Standard</h3>
+                <p class="p-lineup__item-desc">王道のスッキリとしたレモン感。</p>
+              </div>
             </div>
+
+            <!-- 2. Dry -->
             <div class="p-lineup__item">
-              <h3 class="p-lineup__item-title">Dry</h3>
-              <p class="p-lineup__item-desc">キリッとドライな飲み口で、お食事にもぴったり。</p>
+              <div class="p-lineup__image-wrap">
+                <img class="p-lineup__image" src="src/assets/images/lineup/lineup-dry.png" alt="Dry" width="330"
+                  height="970">
+              </div>
+              <div class="p-lineup__text-wrap">
+                <h3 class="p-lineup__item-title">Dry</h3>
+                <p class="p-lineup__item-desc">キリッとドライな飲み口で、お食事にもぴったり。</p>
+              </div>
             </div>
+
+            <!-- 3. Rich -->
             <div class="p-lineup__item">
-              <h3 class="p-lineup__item-title">Rich</h3>
-              <p class="p-lineup__item-desc">蜂蜜を少し加えた、まろやかで優しい甘さ。</p>
+              <div class="p-lineup__image-wrap">
+                <img class="p-lineup__image" src="src/assets/images/lineup/lineup-rich.png" alt="Rich" width="330"
+                  height="970">
+              </div>
+              <div class="p-lineup__text-wrap">
+                <h3 class="p-lineup__item-title">Rich</h3>
+                <p class="p-lineup__item-desc">蜂蜜を少し加えた、まろやかで優しい甘さ。</p>
+              </div>
             </div>
+
           </div>
         </div>
       </section>

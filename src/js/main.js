@@ -3,6 +3,7 @@ import { initHeader } from './modules/header.js';
 import { initFv } from './modules/fv.js';
 import { initConcept } from './modules/concept.js';
 import { initProcess } from './modules/process.js';
+import { initLineup } from './modules/lineup.js';
 
 // すべての読み込みと描画準備が完了したら、preloadクラスを外してアニメーションを解禁する
 window.addEventListener('load', () => {
@@ -15,6 +16,7 @@ const init = () => {
   initFv();
   initConcept();
   initProcess();
+  initLineup();
 };
 
 // 初期化を実行
