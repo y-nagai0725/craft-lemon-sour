@@ -13,3 +13,10 @@ export const GSAP_CONFIG = {
   DURATION: 0.3,
   EASE: 'power2.out'
 };
+
+// サイト全体で使う共通カラー
+export const COLORS = {
+  PRIMARY: '#f9d854', // レモンイエロー
+  DARK: '#12161a',    // ダークネイビー
+  LIGHT: '#fcfaf2'    // オフホワイト
+};
