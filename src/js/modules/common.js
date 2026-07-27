@@ -1,7 +1,8 @@
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 
-gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export const initScrollTop = () => {
   const scrollTopLinks = document.querySelectorAll('.js-scroll-top');
@@ -20,5 +21,19 @@ export const initScrollTop = () => {
         ease: 'power3.inOut'
       });
     });
+  });
+};
+
+export const initPageTop = () => {
+  const pagetop = document.querySelector('.js-pagetop');
+
+  if (!pagetop) return;
+
+  // FV（#fv）を通り過ぎて、Conceptセクション（#concept）が見え始めたらボタンを表示
+  ScrollTrigger.create({
+    trigger: '#concept',
+    start: 'top 70%',
+    onEnter: () => pagetop.classList.add('is-active'),
+    onLeaveBack: () => pagetop.classList.remove('is-active')
   });
 };

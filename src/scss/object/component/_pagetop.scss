@@ -1,0 +1,49 @@
+@use "../../global" as g;
+
+.c-pagetop {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: g.$z-index-pagetop;
+  display: flex;
+  visibility: hidden;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  aspect-ratio: 1;
+  cursor: pointer;
+  background-color: g.$color-primary;
+  border-radius: 50%;
+  opacity: 0;
+  transition:
+    opacity g.$transition-duration g.$transition-easing,
+    visibility g.$transition-duration g.$transition-easing,
+    transform g.$transition-duration g.$transition-easing;
+
+  @include g.mq(md) {
+    right: 4rem;
+    bottom: 4rem;
+    width: 5rem;
+  }
+
+  // ホバー時に少し浮き上がる
+  @include g.hover {
+    transform: translateY(-4px);
+  }
+
+  &.is-active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  // 上矢印
+  &::before {
+    width: 0.8rem;
+    aspect-ratio: 1;
+    margin-top: 0.4rem;
+    content: "";
+    border-top: 2px solid g.$color-dark;
+    border-left: 2px solid g.$color-dark;
+    transform: rotate(45deg);
+  }
+}

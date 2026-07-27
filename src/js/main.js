@@ -1,5 +1,5 @@
 import '../scss/style.scss';
-import { initScrollTop } from './modules/common.js';
+import { initScrollTop, initPageTop } from './modules/common.js';
 import { initHeader } from './modules/header.js';
 import { initFv } from './modules/fv.js';
 import { initConcept } from './modules/concept.js';
@@ -15,6 +15,7 @@ window.addEventListener('load', () => {
 // 処理をまとめて実行する初期化関数
 const init = () => {
   initScrollTop();
+  initPageTop();
   initHeader();
   initFv();
   initConcept();
