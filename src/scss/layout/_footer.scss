@@ -1,0 +1,88 @@
+@use "../global" as g;
+
+.l-footer {
+  padding: 8rem 0 4rem;
+  color: g.$color-light;
+  background-color: g.$color-dark;
+
+  &__inner {
+    max-width: 120rem;
+    padding: 0 2rem;
+    margin: 0 auto;
+
+    @include g.mq(md) {
+      padding: 0 4rem;
+    }
+  }
+
+  /* ------------------------------
+    ロゴとナビゲーション
+  ------------------------------ */
+  &__nav-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+    padding-bottom: 6rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid rgba(g.$color-light, 0.2);
+
+    @include g.mq(md) {
+      flex-direction: row;
+      justify-content: space-between;
+      padding-bottom: 4rem;
+    }
+  }
+
+  &__logo {
+    font-size: 2.4rem;
+    font-weight: g.$font-bold;
+    color: g.$color-primary;
+    letter-spacing: 0.1em;
+    transition: opacity g.$transition-duration g.$transition-easing;
+
+    @include g.hover {
+      opacity: 0.7;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3.2rem;
+    justify-content: center;
+
+    @include g.mq(md) {
+      gap: 4.8rem;
+    }
+  }
+
+  &__link {
+    font-size: 1.4rem;
+    font-weight: g.$font-bold;
+    letter-spacing: 0.05em;
+    transition: color g.$transition-duration g.$transition-easing;
+
+    @include g.hover {
+      color: g.$color-primary;
+    }
+  }
+
+  /* ------------------------------
+    クレジットとコピーライト
+  ------------------------------ */
+  &__info {
+    text-align: center;
+  }
+
+  &__credit {
+    margin-bottom: 1.6rem;
+    font-size: 1.2rem;
+    opacity: 0.7;
+  }
+
+  &__copyright {
+    font-size: 1.2rem;
+    opacity: 0.5;
+  }
+}

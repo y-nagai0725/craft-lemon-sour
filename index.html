@@ -19,7 +19,7 @@
     <!-- ヘッダー (Layout) -->
     <header class="l-header" id="js-header">
       <div class="l-header__inner">
-        <a href="/" class="l-header__logo">The Craft Lemon Sour</a>
+        <a href="/" class="l-header__logo js-scroll-top">The Craft Lemon Sour</a>
 
         <!-- SP用のハンバーガーボタン -->
         <button class="l-header__hamburger" id="js-hamburger" aria-label="メニューを開く">
@@ -197,8 +197,28 @@
       </section>
     </main>
 
-    <footer class="l-footer">
-      <p class="l-footer__copy">&copy; 2026 The Craft Lemon Sour</p>
+    <footer class="l-footer" id="js-footer">
+      <div class="l-footer__inner">
+
+        <!-- ロゴとナビゲーション -->
+        <div class="l-footer__nav-wrap">
+          <a href="/" class="l-footer__logo js-scroll-top">The Craft Lemon Sour</a>
+          <nav class="l-footer__nav">
+            <ul class="l-footer__list">
+              <li class="l-footer__item"><a href="#concept" class="l-footer__link js-footer-nav-link">Concept</a></li>
+              <li class="l-footer__item"><a href="#process" class="l-footer__link js-footer-nav-link">Process</a></li>
+              <li class="l-footer__item"><a href="#lineup" class="l-footer__link js-footer-nav-link">Lineup</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- クレジットとコピーライト -->
+        <div class="l-footer__info">
+          <p class="l-footer__credit">※当サイトで使用している画像は「Gemini」で生成した画像を使用しています。</p>
+          <p class="l-footer__copyright"><small>&copy; 2026 The Craft Lemon Sour</small></p>
+        </div>
+
+      </div>
     </footer>
 
   </div>

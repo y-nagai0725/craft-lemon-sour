@@ -19,7 +19,7 @@ export const initLineup = () => {
     ease: 'none',
     scrollTrigger: {
       trigger: trigger,
-      pin: true,
+      pin: ".js-lineup-pin",
       scrub: 1, // 1秒遅れで追従する
       start: 'top top',
       end: () => `+=${getScrollAmount()}`,
