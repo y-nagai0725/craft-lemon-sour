@@ -21,6 +21,10 @@ body {
   line-height: 1.6;
   color: g.$color-light;
   background-color: g.$color-dark;
+
+  &.is-noscroll {
+    overflow: hidden;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {

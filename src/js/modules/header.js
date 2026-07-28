@@ -17,8 +17,8 @@ gsap.registerPlugin(ScrollToPlugin);
 export const initHeader = () => {
   const header = document.getElementById('js-header');
   const hamburger = document.getElementById('js-hamburger');
-  const nav = document.getElementById('js-nav');
-  const navLinks = document.querySelectorAll('.js-nav-link');
+  const nav = document.getElementById('js-header-nav');
+  const navLinks = document.querySelectorAll('.js-header-nav-link');
 
   if (!header || !hamburger || !nav || navLinks.length === 0) return;
 
@@ -45,8 +45,10 @@ export const initHeader = () => {
     hamburger.classList.toggle('is-active');
 
     if (isOpen) {
+      document.body.classList.add('is-noscroll'); // 開いた時はスクロール禁止
       tl.play();
     } else {
+      document.body.classList.remove('is-noscroll'); // 閉じた時はスクロール許可
       tl.reverse();
     }
   });
@@ -61,6 +63,7 @@ export const initHeader = () => {
       if (isOpen) {
         isOpen = false;
         hamburger.classList.remove('is-active');
+        document.body.classList.remove('is-noscroll');
         tl.reverse();
       }
 
@@ -86,6 +89,7 @@ export const initHeader = () => {
       if (isOpen) {
         isOpen = false;
         hamburger.classList.remove('is-active');
+        document.body.classList.remove('is-noscroll');
 
         // タイムラインを再生前の初期状態に戻して一時停止する
         tl.progress(0).pause();
