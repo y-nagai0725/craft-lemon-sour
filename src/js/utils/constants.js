@@ -10,8 +10,9 @@ export const BREAKPOINTS = {
 
 // GSAPのアニメーション共通設定
 export const GSAP_CONFIG = {
-  DURATION: 0.3,
-  EASE: 'power2.out'
+  EASE: 'power3.out',
+  EASE_SCROLL: 'power3.inOut',
+  DURATION_SCROLL: 0.8,
 };
 
 // サイト全体で使う共通カラー

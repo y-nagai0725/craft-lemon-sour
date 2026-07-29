@@ -4,105 +4,123 @@
 
 import gsap from 'gsap';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
-
-// 定数読み込み
 import { BREAKPOINTS, GSAP_CONFIG } from '../utils/constants.js';
 
-// GSAPプラグインの登録
 gsap.registerPlugin(ScrollToPlugin);
 
-/**
- * ヘッダー機能初期化処理
- */
 export const initHeader = () => {
-  const header = document.getElementById('js-header');
-  const hamburger = document.getElementById('js-hamburger');
-  const nav = document.getElementById('js-header-nav');
-  const navLinks = document.querySelectorAll('.js-header-nav-link');
+  return new Promise((resolve) => {
+    const header = document.getElementById('js-header');
+    const hamburger = document.getElementById('js-hamburger');
+    const nav = document.getElementById('js-header-nav');
+    const navLinks = document.querySelectorAll('.js-header-nav-link');
 
-  if (!header || !hamburger || !nav || navLinks.length === 0) return;
+    if (!header || !hamburger || !nav || navLinks.length === 0) {
+      resolve();
+      return;
+    }
 
-  // メニューが開いているかどうかの状態管理フラグ
-  let isOpen = false;
+    // ヘッダー出現アニメーション
+    gsap.fromTo(header,
+      { yPercent: -100, autoAlpha: 0 },
+      {
+        yPercent: 0,
+        autoAlpha: 1,
+        duration: 0.8,
+        ease: GSAP_CONFIG.EASE,
+        onComplete: resolve
+      }
+    );
 
-  // メニュー開閉用のGSAPタイムライン（最初は停止状態にしておく）
-  const tl = gsap.timeline({ paused: true });
+    // =========================================================================
+    // メニューの開閉状態管理とタイムライン
+    // =========================================================================
+    let isOpen = false;
+    const tl = gsap.timeline({ paused: true });
 
-  tl.to(nav, {
-    autoAlpha: 1,
-    duration: GSAP_CONFIG.DURATION,
-    ease: GSAP_CONFIG.EASE
-  })
-    .fromTo(navLinks,
+    tl.to(nav, {
+      autoAlpha: 1,
+      duration: 0.3,
+      ease: GSAP_CONFIG.EASE
+    }).fromTo(navLinks,
       { y: 20, autoAlpha: 0 },
-      { y: 0, autoAlpha: 1, duration: GSAP_CONFIG.DURATION, stagger: 0.1, ease: GSAP_CONFIG.EASE },
+      { y: 0, autoAlpha: 1, duration: 0.3, stagger: 0.1, ease: GSAP_CONFIG.EASE },
       '-=0.15'
     );
 
-  // ハンバーガーボタンのクリックイベント
-  hamburger.addEventListener('click', () => {
-    isOpen = !isOpen;
-    hamburger.classList.toggle('is-active');
+    // メニューを開く処理
+    const openMenu = () => {
+      isOpen = true;
+      hamburger.classList.add('is-active');
+      document.body.classList.add('is-noscroll');
+      tl.play(); // アニメーションを再生
+    };
 
-    if (isOpen) {
-      document.body.classList.add('is-noscroll'); // 開いた時はスクロール禁止
-      tl.play();
-    } else {
-      document.body.classList.remove('is-noscroll'); // 閉じた時はスクロール許可
-      tl.reverse();
-    }
-  });
+    // メニューを閉じる処理
+    const closeMenu = (immediate = false) => {
+      isOpen = false;
+      hamburger.classList.remove('is-active');
+      document.body.classList.remove('is-noscroll');
 
-  // アンカーリンクのスムーススクロールとメニュー閉じる処理
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = link.getAttribute('href');
-
-      // もしスマホサイズでメニューが開いていたら、リンク遷移と同時に閉じる
-      if (isOpen) {
-        isOpen = false;
-        hamburger.classList.remove('is-active');
-        document.body.classList.remove('is-noscroll');
-        tl.reverse();
+      if (immediate) {
+        tl.progress(0).pause(); // PC表示への切り替え時は一瞬で初期状態に戻す
+      } else {
+        tl.reverse(); // 通常時は逆再生で閉じる
       }
+    };
 
-      // 対象のセクションまでスムーススクロール
-      gsap.to(window, {
-        duration: 0.8,
-        scrollTo: {
-          y: target,
-          offsetY: () => header.offsetHeight // クリックした瞬間のヘッダーの高さを取得し、その高さ分ずらす
-        },
-        ease: 'power3.inOut'
+    // =========================================================================
+    // 各種イベントリスナー
+    // =========================================================================
+
+    // ハンバーガーボタンのクリックイベント
+    hamburger.addEventListener('click', () => {
+      if (isOpen) {
+        closeMenu(); // 開いていたら閉じる
+      } else {
+        openMenu();  // 閉じていたら開く
+      }
+    });
+
+    // アンカーリンクのスムーススクロールとメニューを閉じる処理
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = link.getAttribute('href');
+
+        // メニューを閉じる
+        if (isOpen) closeMenu();
+
+        // 対象のセクションまでスムーススクロール
+        gsap.to(window, {
+          duration: 0.8,
+          scrollTo: {
+            y: target,
+            offsetY: () => header.offsetHeight // クリックした瞬間のヘッダーの高さを取得し、その高さ分ずらす
+          },
+          ease: GSAP_CONFIG.EASE_SCROLL
+        });
       });
     });
-  });
 
-  // PC表示切り替え判定(768px以上)
-  const mql = window.matchMedia(`(width >= ${BREAKPOINTS.MD}px)`);
+    // PC表示切り替え判定(768px以上)
+    const mql = window.matchMedia(`(width >= ${BREAKPOINTS.MD}px)`);
 
-  // PC表示切り替え時処理
-  const handleMediaQuery = (e) => {
-    if (e.matches) {
-      // メニューが開いている状態でPC表示になったら状態をリセット
-      if (isOpen) {
-        isOpen = false;
-        hamburger.classList.remove('is-active');
-        document.body.classList.remove('is-noscroll');
+    // PC表示切り替え時処理
+    const handleMediaQuery = (e) => {
+      if (e.matches) {
+        // アニメーションなしで一瞬で閉じる
+        if (isOpen) closeMenu(true);
 
-        // タイムラインを再生前の初期状態に戻して一時停止する
-        tl.progress(0).pause();
+        // PC表示用にGSAPのインラインスタイルを全てクリアする
+        gsap.set([nav, navLinks], { clearProps: 'all' });
       }
+    };
 
-      // PC表示用にGSAPのインラインスタイルを全てクリアする
-      gsap.set([nav, navLinks], { clearProps: 'all' });
-    }
-  };
+    // ブレイクポイントを跨いだ瞬間に発火
+    mql.addEventListener('change', handleMediaQuery);
 
-  // ブレイクポイントを跨いだ瞬間に発火
-  mql.addEventListener('change', handleMediaQuery);
-
-  // 初期表示時にも判定を実行
-  handleMediaQuery(mql);
+    // 初期表示時にも判定を実行
+    handleMediaQuery(mql);
+  });
 };
