@@ -1,15 +1,25 @@
+// =========================================================================
+// fv.js (FV機能モジュール)
+// =========================================================================
+
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { BREAKPOINTS } from '../utils/constants.js';
+import SplitText from 'gsap/SplitText';
+import { BREAKPOINTS, GSAP_CONFIG } from '../utils/constants.js';
 
-// ScrollTriggerを登録
-gsap.registerPlugin(ScrollTrigger);
+// GSAPプラグインの登録
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export const initFv = () => {
-  // matchMediaを準備
+  // テキストを1文字ずつ分割する処理
+  const splitTitle = SplitText.create('.js-fv-text', { type: 'chars' });
+  const chars = splitTitle.chars;
+
+  // テキスト分割の親要素の非表示を解除
+  gsap.set('.js-fv-text', { autoAlpha: 1 });
+
   const mm = gsap.matchMedia();
 
-  // スマホ(SP)とPCで条件を分ける
   mm.add({
     isSp: `(width < ${BREAKPOINTS.MD}px)`,
     isPc: `(width >= ${BREAKPOINTS.MD}px)`
@@ -22,55 +32,67 @@ export const initFv = () => {
       // -----------------------------------
       // SP表示：下からフワッっとフェードイン
       // -----------------------------------
-      tl.from('.p-fv__catch, .p-fv__title', {
-        y: 30,
-        autoAlpha: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out'
-      })
-        .from('.js-fv-item', {
-          y: 100,
-          autoAlpha: 0,
-          duration: 1.5,
-          stagger: 0.1,
-          ease: 'power3.out'
-        }, '-=0.8');
+      // テキストのアニメーション（1文字ずつ）
+      tl.fromTo(chars,
+        { y: 20, autoAlpha: 0 },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 0.6,
+          stagger: 0.05,
+          ease: GSAP_CONFIG.EASE
+        }
+      )
+        // 画像たちのアニメーション
+        .fromTo('.js-fv-item',
+          { y: 100, autoAlpha: 0 },
+          {
+            y: 0,
+            autoAlpha: 1,
+            duration: 1.0,
+            stagger: 0.1,
+            ease: GSAP_CONFIG.EASE
+          },
+          '-=0.4' // テキストが完全に終わる少し前に画像を出し始める
+        );
 
     } else {
       // -----------------------------------
       // PC表示：左右からフェードイン
       // -----------------------------------
-      // テキストは左から入ってくる
-      tl.from('.p-fv__catch, .p-fv__title', {
-        x: -50, // 左方向にずらしておく
-        autoAlpha: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out'
-      })
+      // テキストは左から入ってくる（1文字ずつ）
+      tl.fromTo(chars,
+        { x: -20, autoAlpha: 0 },
+        {
+          x: 0,
+          autoAlpha: 1,
+          duration: 0.6,
+          stagger: 0.035, // PCは文字が横に並ぶから少し早めにする
+          ease: GSAP_CONFIG.EASE
+        }
+      )
         // 画像たちは右からフワッと迫ってくる
-        .from('.js-fv-item', {
-          x: 50, // 右方向にずらしておく
-          autoAlpha: 0,
-          duration: 1.5,
-          stagger: 0.1,
-          ease: 'power3.out'
-        }, '-=0.8');
+        .fromTo('.js-fv-item',
+          { x: 50, autoAlpha: 0 },
+          {
+            x: 0,
+            autoAlpha: 1,
+            duration: 1.0,
+            stagger: 0.1,
+            ease: GSAP_CONFIG.EASE
+          },
+          '-=0.4'
+        );
     }
   });
 
-  // スクロール連動のパララックス（視差効果）
+  // スクロール連動のパララックス
   const parallaxItems = document.querySelectorAll('.js-parallax');
-
   parallaxItems.forEach(item => {
-    // HTMLの data-speed 属性から数値を取得
     const speed = item.dataset.speed || 0.5;
-
     gsap.to(item, {
       y: () => -200 * speed,
       ease: 'none',
-      overwrite: 'auto',
       scrollTrigger: {
         trigger: '.p-fv',
         start: 'top top',

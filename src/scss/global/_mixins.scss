@@ -22,3 +22,15 @@
     }
   }
 }
+
+// コンテンツ幅
+@mixin contents-width {
+  width: 100%;
+  max-width: 120rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+
+  @include mq(md) {
+    padding: 0 4rem;
+  }
+}

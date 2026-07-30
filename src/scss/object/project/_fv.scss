@@ -28,22 +28,19 @@
   }
 
   &__inner {
+    @include g.contents-width;
+
     position: relative;
     z-index: g.$z-index-fv-inner;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 100%;
-    max-width: 120rem;
     height: 100%;
-    padding: 0 2rem;
-    margin: 0 auto;
 
     @include g.mq(md) {
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
-      padding: 0 4rem;
     }
   }
 
@@ -168,5 +165,15 @@
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  // =========================================================================
+  // GSAPアニメーション用の初期状態（FOUC対策）
+  // =========================================================================
+  &__catch,
+  &__title,
+  &__item-wrap {
+    visibility: hidden;
+    opacity: 0;
   }
 }
