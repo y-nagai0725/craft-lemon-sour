@@ -26,7 +26,7 @@ export const initHeader = () => {
       {
         yPercent: 0,
         autoAlpha: 1,
-        duration: 0.8,
+        duration: 0.6,
         ease: GSAP_CONFIG.EASE,
         onComplete: resolve
       }
