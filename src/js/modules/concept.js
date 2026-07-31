@@ -1,6 +1,10 @@
+// =========================================================================
+// concept.js (Conceptセクション用モジュール)
+// =========================================================================
+
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { BREAKPOINTS } from '../utils/constants.js';
+import { BREAKPOINTS, GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -8,14 +12,17 @@ export const initConcept = () => {
   // ------------------------------
   // ボトルの登場アニメーション
   // ------------------------------
-  gsap.from('.js-pin-bottle img', {
+  gsap.fromTo('.js-bottle-image', {
     y: 80, // 下から少しゆったりと
-    autoAlpha: 0,
+    autoAlpha: 0
+  }, {
+    y: 0,
+    autoAlpha: 1,
     duration: 1.5,
-    ease: 'power3.out',
+    ease: GSAP_CONFIG.EASE,
     scrollTrigger: {
       trigger: '.p-concept',
-      start: 'top 65%',
+      start: 'top 60%',
     }
   });
 
@@ -28,14 +35,14 @@ export const initConcept = () => {
     let { isSp, isPc } = context.conditions;
 
     // ヘッダー要素を取得
-    const header = document.querySelector('.l-header');
+    const header = document.getElementById('js-header');
 
     // headerが存在すれば高さを取得、なければ予備としてSCSSの固定値を使う
     const headerHeight = header ? header.offsetHeight : (isPc ? 80 : 60);
 
-    /* ------------------------------
-      ボトルのPin留め（固定）
-    ------------------------------ */
+    // ------------------------------
+    // ボトルのPin留め（固定）
+    // ------------------------------
     ScrollTrigger.create({
       trigger: '.p-concept',
       start: `top top+=${headerHeight}`, // ヘッダーの下端に触れたらスタート
@@ -44,21 +51,24 @@ export const initConcept = () => {
       pinSpacing: isPc ? true : false, // SP時はテキストを上に被せるためにfalse、PC時は横並びを維持するためにtrueにする
     });
 
-    /* ------------------------------
-      テキストブロックのフェードイン
-    ------------------------------ */
-    const blocks = document.querySelectorAll('.p-concept__block');
+    // ------------------------------
+    // テキストブロックのフェードイン
+    // ------------------------------
+    const blocks = document.querySelectorAll('.js-concept-text');
 
     blocks.forEach((block) => {
-      gsap.from(block, {
+      gsap.fromTo(block, {
         y: 40,
         autoAlpha: 0,
+      }, {
+        y: 0,
+        autoAlpha: 1,
         duration: 1.2,
-        ease: 'power3.out',
+        ease: GSAP_CONFIG.EASE,
         scrollTrigger: {
           trigger: block,
           start: 'top 80%',
-        }
+        },
       });
     });
   });
