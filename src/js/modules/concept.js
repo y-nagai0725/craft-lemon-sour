@@ -22,7 +22,7 @@ export const initConcept = () => {
     ease: GSAP_CONFIG.EASE,
     scrollTrigger: {
       trigger: '.p-concept',
-      start: 'top 60%',
+      start: 'top 50%',
     }
   });
 
@@ -57,19 +57,45 @@ export const initConcept = () => {
     const blocks = document.querySelectorAll('.js-concept-text');
 
     blocks.forEach((block) => {
-      gsap.fromTo(block, {
-        y: 40,
-        autoAlpha: 0,
-      }, {
-        y: 0,
-        autoAlpha: 1,
-        duration: 1.2,
-        ease: GSAP_CONFIG.EASE,
+      // ブロックの中にあるタイトルと説明文を取得する
+      const title = block.querySelector('.p-concept__title');
+      const desc = block.querySelector('.p-concept__desc');
+
+      // タイムラインを作成
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: block,
-          start: 'top 80%',
-        },
+          start: 'top 70%',
+          toggleActions: 'play none none reverse',
+        }
       });
+
+      // ブロック全体をフェードイン
+      tl.fromTo(block,
+        {
+          autoAlpha: 0
+        },
+        {
+          autoAlpha: 1, duration: 0.6, ease: GSAP_CONFIG.EASE
+        }
+      )
+        // タイトルと説明文に「ぼかし(blur)」をかけながら下から順番に表示
+        .fromTo([title, desc],
+          {
+            y: 30,
+            autoAlpha: 0,
+            filter: 'blur(8px)'
+          },
+          {
+            y: 0,
+            autoAlpha: 1,
+            filter: 'blur(0px)',
+            duration: 1.0,
+            stagger: 0.2,
+            ease: GSAP_CONFIG.EASE
+          },
+          '-=0.4' // 背景が完全に出る少し前にテキストを出し始める
+        );
     });
   });
 };
