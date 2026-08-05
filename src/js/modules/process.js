@@ -42,6 +42,20 @@ export const initProcess = () => {
   // ------------------------------
   const mm = gsap.matchMedia();
 
+  // .fromの共通設定
+  const commonFrom = {
+    y: 60,
+    autoAlpha: 0,
+  };
+
+  // .toの共通設定
+  const commonTo = {
+    y: 0,
+    autoAlpha: 1,
+    duration: 1.2,
+    ease: GSAP_CONFIG.EASE,
+  };
+
   mm.add({
     isSp: `(width < ${BREAKPOINTS.MD}px)`,
     isPc: `(width >= ${BREAKPOINTS.MD}px)`
@@ -50,53 +64,44 @@ export const initProcess = () => {
 
     if (isPc) {
       // PC時：横並びなので、テキストと画像を一気にStaggerで登場させる
-      gsap.fromTo([...texts, ...images], {
-        y: 60,
-        autoAlpha: 0,
-      }, {
-        y: 0,
-        autoAlpha: 1,
-        duration: 1.2,
-        stagger: 0.2, // テキスト→レモン→麦→樽の順
-        ease: GSAP_CONFIG.EASE,
-        scrollTrigger: {
-          trigger: processSection,
-          start: 'top 50%',
+      gsap.fromTo([...texts, ...images],
+        commonFrom,
+        {
+          ...commonTo,
+          stagger: 0.2, // テキスト→レモン→麦→樽の順
+          scrollTrigger: {
+            trigger: processSection,
+            start: 'top 50%',
+          }
         }
-      });
+      );
     } else {
       // SP時：縦積みなので、テキストと画像を別々のトリガーで発火させる
 
       // 上にあるテキストのアニメーション
-      gsap.fromTo(texts, {
-        y: 60,
-        autoAlpha: 0,
-      }, {
-        y: 0,
-        autoAlpha: 1,
-        duration: 1.2,
-        ease: GSAP_CONFIG.EASE,
-        scrollTrigger: {
-          trigger: processSection,
-          start: 'top 60%',
+      gsap.fromTo(texts,
+        commonFrom,
+        {
+          ...commonTo,
+          scrollTrigger: {
+            trigger: processSection,
+            start: 'top 60%',
+          }
         }
-      });
+      );
 
       // 下にある画像のアニメーション
-      gsap.fromTo(images, {
-        y: 60,
-        autoAlpha: 0,
-      }, {
-        y: 0,
-        autoAlpha: 1,
-        duration: 1.2,
-        stagger: 0.2, // 3枚の画像は順番に出す
-        ease: GSAP_CONFIG.EASE,
-        scrollTrigger: {
-          trigger: '.p-process__images', // 画像エリア自体が画面に入ったら発火
-          start: 'top 60%',
+      gsap.fromTo(images,
+        commonFrom,
+        {
+          ...commonTo,
+          stagger: 0.2, // 3枚の画像は順番に出す
+          scrollTrigger: {
+            trigger: '.p-process__images', // 画像エリア自体が画面に入ったら発火
+            start: 'top 60%',
+          }
         }
-      });
+      );
     }
   });
 };
