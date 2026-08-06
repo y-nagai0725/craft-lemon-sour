@@ -10,16 +10,16 @@
   &__inner {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 2.4rem;
     width: 100%;
     height: 100svh;
 
     // ヘッダーの高さ分を考慮して余白を作る
-    padding: calc(g.$header-height-sp + 4rem) 0 4rem;
+    padding: calc(g.$header-height-sp + 3.2rem) 0 6.4rem;
 
     @include g.mq(md) {
-      gap: 6rem;
-      padding: calc(g.$header-height-pc + 4rem) 0 6rem;
+      gap: 4rem;
+      padding: calc(g.$header-height-pc + 3.2rem) 0 8.8rem;
     }
   }
 
@@ -34,20 +34,14 @@
     }
   }
 
-  // 横に流れるレール部分
+  // 横スクロールされる部分
   &__track {
     display: flex;
     flex: 1;
     flex-wrap: nowrap;
-    gap: 10rem;
     align-items: center;
     width: max-content;
     min-height: 0;
-    padding: 0 50vw;
-
-    @include g.mq(md) {
-      gap: 15rem;
-    }
   }
 
   // 各フレーバーのアイテム
@@ -55,11 +49,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 26rem;
+    width: 100vw;
     height: 100%;
 
     @include g.mq(md) {
-      width: 32rem;
+      flex-direction: row;
+      gap: 8rem;
+      justify-content: center;
     }
   }
 
@@ -69,7 +65,13 @@
     justify-content: center;
     width: 100%;
     min-height: 0;
-    margin-bottom: 2.4rem;
+    margin-bottom: 1.6rem;
+
+    @include g.mq(md) {
+      flex: 0 1 40rem;
+      height: 100%;
+      margin-bottom: 0;
+    }
   }
 
   &__image {
@@ -81,7 +83,15 @@
   }
 
   &__text-wrap {
+    width: 100%;
+    padding: 0 2rem;
     text-align: center;
+
+    @include g.mq(md) {
+      flex: 0 1 40rem;
+      padding: 0;
+      text-align: left;
+    }
   }
 
   &__item-title {
@@ -102,5 +112,48 @@
     @include g.mq(md) {
       font-size: 1.6rem;
     }
+  }
+
+  // インジケーターのスタイル
+  &__indicator {
+    position: absolute;
+    bottom: 3.2rem;
+    left: 50%;
+    z-index: 10;
+    display: flex;
+    gap: 1.6rem;
+    width: 18rem; // インジケーター全体の幅
+    transform: translateX(-50%);
+
+    @include g.mq(md) {
+      bottom: 4.4rem;
+      gap: 2.4rem;
+      width: 32rem;
+    }
+  }
+
+  &__indicator-item {
+    flex: 1;
+    height: 0.2rem;
+    overflow: hidden;
+    background-color: rgba(g.$color-light, 0.3);
+    border-radius: 10rem;
+  }
+
+  &__indicator-bar {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: g.$color-primary;
+    transform: scaleX(0); // 初期状態は幅0（見えない状態）
+    transform-origin: left;
+  }
+
+  // =========================================================================
+  // GSAPアニメーション用の初期状態（FOUC対策）
+  // =========================================================================
+  &__item {
+    visibility: hidden;
+    opacity: 0;
   }
 }
