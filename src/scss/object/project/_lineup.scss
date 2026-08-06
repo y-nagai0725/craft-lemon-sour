@@ -46,6 +46,7 @@
 
   // 各フレーバーのアイテム
   &__item {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,6 +57,22 @@
       flex-direction: row;
       gap: 8rem;
       justify-content: center;
+    }
+
+    // 巨大な透かしナンバリング
+    @include g.mq(xl) {
+      &::before {
+        position: absolute;
+        top: 50%;
+        right: 8%;
+        z-index: g.$z-index-back; // 画像やテキストの後ろに
+        font-size: 28rem;
+        font-weight: g.$font-bold;
+        color: rgba(g.$color-light, 0.03);
+        pointer-events: none;
+        content: attr(data-num);
+        transform: translateY(-50%);
+      }
     }
   }
 
