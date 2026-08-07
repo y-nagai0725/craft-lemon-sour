@@ -7,6 +7,7 @@ import { initFv } from './modules/fv.js';
 import { initConcept } from './modules/concept.js';
 import { initProcess } from './modules/process.js';
 import { initLineup } from './modules/lineup.js';
+import { initMessage } from './modules/message.js';
 import { initFooter } from './modules/footer.js';
 
 // すべての読み込みと描画準備が完了したら、preloadクラスを外してアニメーションを解禁する
@@ -34,6 +35,7 @@ const init = () => {
   initConcept();
   initProcess();
   initLineup();
+  initMessage();
   initFooter();
 };
 
