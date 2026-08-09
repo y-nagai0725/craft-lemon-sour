@@ -1,0 +1,30 @@
+@use "sass:color";
+@use "../../global" as g;
+
+.c-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28rem;
+  height: 7.2rem;
+  padding: 0 4rem;
+  color: g.$color-dark;
+  background-color: g.$color-primary;
+  border-radius: 10rem;
+
+  // 背景色と影のホバー変化だけCSSで設定。座標の移動はGSAPに任せる
+  transition:
+    background-color g.$transition-duration g.$transition-easing,
+    box-shadow g.$transition-duration g.$transition-easing;
+
+  @include g.hover {
+    background-color: color.adjust(#f9d854, $lightness: 10%);
+    box-shadow: 0 0.8rem 2.4rem rgba(#f9d854, 0.4);
+  }
+
+  &__text {
+    font-size: 1.8rem;
+    font-weight: g.$font-bold;
+    letter-spacing: 0.05em;
+  }
+}

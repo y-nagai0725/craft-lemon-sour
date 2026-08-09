@@ -1,0 +1,111 @@
+@use "../../global" as g;
+
+.p-shop {
+  position: relative;
+  padding: 10rem 0;
+  overflow: hidden;
+  color: g.$color-light;
+  background-color: g.$color-dark;
+
+  @include g.mq(md) {
+    padding: 20rem 0;
+  }
+
+  &__inner {
+    @include g.contents-width;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+
+    @include g.mq(md) {
+      flex-direction: row;
+      gap: 8rem;
+      justify-content: center;
+    }
+  }
+
+  // 画像エリア
+  &__image-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    @include g.mq(md) {
+      width: 40%;
+    }
+  }
+
+  &__image {
+    width: auto;
+    height: 100%;
+    max-height: 40rem;
+    object-fit: contain;
+    filter: drop-shadow(0 2rem 4rem rgb(0 0 0 / 40%));
+
+    @include g.mq(md){
+      max-height: 60rem;
+    }
+  }
+
+  // テキスト・ボタンエリア
+  &__text-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    @include g.mq(md) {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+
+  &__title {
+    margin-bottom: 2.4rem;
+    font-size: 3.2rem;
+    font-weight: g.$font-bold;
+    line-height: 1.4;
+    color: g.$color-primary;
+
+    @include g.mq(md) {
+      font-size: 4.8rem;
+    }
+  }
+
+  &__price {
+    margin-bottom: 4rem;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+
+    span {
+      margin: 0 0.8rem;
+      font-size: 3.2rem;
+      font-weight: g.$font-bold;
+    }
+
+    @include g.mq(md) {
+      font-size: 1.8rem;
+
+      span {
+        font-size: 4rem;
+      }
+    }
+  }
+
+  &__button-wrap {
+    // マグネティックボタンの動きを邪魔しないようにラッパーを設定
+    position: relative;
+    display: inline-block;
+  }
+
+  // =========================================================================
+  // GSAPアニメーション用の初期状態（FOUC対策）
+  // =========================================================================
+  &__image-wrap,
+  &__text-wrap {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
