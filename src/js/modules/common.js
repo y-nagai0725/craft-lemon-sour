@@ -1,6 +1,11 @@
+// =========================================================================
+// common.js (共通モジュール)
+// =========================================================================
+
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
+import { GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -16,9 +21,9 @@ export const initScrollTop = () => {
 
       // ページの一番上（y: 0）へスムーススクロール
       gsap.to(window, {
-        duration: 0.8,
+        duration: GSAP_CONFIG.DURATION_SCROLL,
         scrollTo: 0,
-        ease: 'power3.inOut'
+        ease: GSAP_CONFIG.EASE_SCROLL
       });
     });
   });
@@ -27,6 +32,7 @@ export const initScrollTop = () => {
 export const initPageTop = () => {
   const pagetop = document.querySelector('.js-pagetop');
 
+  // 要素が存在しない場合は処理を止める
   if (!pagetop) return;
 
   // FV（#fv）を通り過ぎて、Conceptセクション（#concept）が見え始めたらボタンを表示

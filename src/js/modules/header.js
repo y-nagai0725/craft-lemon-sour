@@ -93,7 +93,7 @@ export const initHeader = () => {
 
         // 対象のセクションまでスムーススクロール
         gsap.to(window, {
-          duration: 0.8,
+          duration: GSAP_CONFIG.DURATION_SCROLL,
           scrollTo: {
             y: target,
             offsetY: () => header.offsetHeight // クリックした瞬間のヘッダーの高さを取得し、その高さ分ずらす

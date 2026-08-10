@@ -28,6 +28,7 @@
     font-size: 1.8rem;
     font-weight: g.$font-bold;
     color: g.$color-primary;
+    letter-spacing: 0.05em;
     transition: opacity g.$transition-duration g.$transition-easing;
 
     @include g.mq(md) {
