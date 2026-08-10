@@ -45,35 +45,41 @@
       <section id="fv" class="p-fv">
         <div class="p-fv__inner">
           <div class="p-fv__text-wrap">
-            <p class="p-fv__catch js-fv-text">週末の夜に、特別なひとときを。</p>
-            <h1 class="p-fv__title js-fv-text">The Craft Lemon Sour</h1>
+            <p class="p-fv__catch js-fv-catch">週末の夜に、特別なひとときを。</p>
+            <h1 class="p-fv__title js-fv-title">The Craft Lemon Sour</h1>
           </div>
 
           <div class="p-fv__images">
 
-            <div class="p-fv__item-wrap js-fv-item">
-              <div class="p-fv__item p-fv__item--back1 js-parallax" data-speed="0.3">
-                <img class="p-fv__image" src="src/assets/images/fv/fv-back-1.png" alt="ミントの葉" width="300" height="189">
+            <!-- 奥のボトル（Rich） -->
+            <div class="p-fv__item-wrap js-fv-item-wrap">
+              <div class="p-fv__item p-fv__item--bottle-rich js-fv-item-bottle" data-speed="0.3">
+                <img class="p-fv__image js-fv-image-bottle" src="src/assets/images/common/bottle-rich.png"
+                  alt="Rich ボトル" width="330" height="970">
               </div>
             </div>
 
-            <div class="p-fv__item-wrap js-fv-item">
-              <div class="p-fv__item p-fv__item--main js-fv-main">
-                <img class="p-fv__image" src="src/assets/images/fv/fv-main.png" alt="レモンサワーグラス" width="659"
-                  height="1100">
+            <!-- 中間のボトル（Standard） -->
+            <div class="p-fv__item-wrap js-fv-item-wrap">
+              <div class="p-fv__item p-fv__item--bottle-standard js-fv-item-bottle" data-speed="0.5">
+                <img class="p-fv__image js-fv-image-bottle" src="src/assets/images/common/bottle-standard.png"
+                  alt="Standard ボトル" width="330" height="970">
               </div>
             </div>
 
-            <div class="p-fv__item-wrap js-fv-item">
-              <div class="p-fv__item p-fv__item--front1 js-parallax" data-speed="0.9">
-                <img class="p-fv__image" src="src/assets/images/fv/fv-front-1.png" alt="レモンスライス" width="394"
-                  height="400">
+            <!-- 中間のボトル（Dry） -->
+            <div class="p-fv__item-wrap js-fv-item-wrap">
+              <div class="p-fv__item p-fv__item--bottle-dry js-fv-item-bottle" data-speed="0.6">
+                <img class="p-fv__image js-fv-image-bottle" src="src/assets/images/common/bottle-dry.png" alt="Dry ボトル"
+                  width="330" height="970">
               </div>
             </div>
 
-            <div class="p-fv__item-wrap js-fv-item">
-              <div class="p-fv__item p-fv__item--front2 js-parallax" data-speed="1.4">
-                <img class="p-fv__image" src="src/assets/images/fv/fv-front-2.png" alt="氷" width="400" height="282">
+            <!-- 主役のグラス（一番手前） -->
+            <div class="p-fv__item-wrap js-fv-item-wrap">
+              <div class="p-fv__item p-fv__item--main js-fv-item-main">
+                <img class="p-fv__image js-fv-image-main" src="src/assets/images/fv/fv-main.png" alt="レモンサワーグラス"
+                  width="846" height="1417">
               </div>
             </div>
 
@@ -86,8 +92,8 @@
 
           <!-- 固定（Pin留め）するボトルの画像エリア -->
           <div class="p-concept__image-wrap js-pin-bottle">
-            <img class="p-concept__image js-bottle-image" src="src/assets/images/concept/concept-background.png"
-              alt="The Craft Lemon Sour ボトル" width="385" height="1389">
+            <img class="p-concept__image js-bottle-image" src="src/assets/images/common/bottle-standard.png"
+              alt="The Craft Lemon Sour ボトル" width="330" height="970">
           </div>
 
           <!-- スクロールで流れてくるテキストエリア -->
@@ -158,7 +164,7 @@
             <!-- 1. Standard -->
             <div class="p-lineup__item js-lineup-item" data-num="01">
               <div class="p-lineup__image-wrap">
-                <img class="p-lineup__image js-lineup-image" src="src/assets/images/lineup/lineup-standard.png"
+                <img class="p-lineup__image js-lineup-image" src="src/assets/images/common/bottle-standard.png"
                   alt="Standard" width="330" height="970">
               </div>
               <div class="p-lineup__text-wrap">
@@ -170,7 +176,7 @@
             <!-- 2. Dry -->
             <div class="p-lineup__item js-lineup-item" data-num="02">
               <div class="p-lineup__image-wrap">
-                <img class="p-lineup__image js-lineup-image" src="src/assets/images/lineup/lineup-dry.png" alt="Dry"
+                <img class="p-lineup__image js-lineup-image" src="src/assets/images/common/bottle-dry.png" alt="Dry"
                   width="330" height="970">
               </div>
               <div class="p-lineup__text-wrap">
@@ -182,7 +188,7 @@
             <!-- 3. Rich -->
             <div class="p-lineup__item js-lineup-item" data-num="03">
               <div class="p-lineup__image-wrap">
-                <img class="p-lineup__image js-lineup-image" src="src/assets/images/lineup/lineup-rich.png" alt="Rich"
+                <img class="p-lineup__image js-lineup-image" src="src/assets/images/common/bottle-rich.png" alt="Rich"
                   width="330" height="970">
               </div>
               <div class="p-lineup__text-wrap">
@@ -226,8 +232,8 @@
 
           <!-- 左側（または上部）：商品画像 -->
           <div class="p-shop__image-wrap js-shop-image-wrap">
-            <img class="p-shop__image js-shop-image" src="src/assets/images/concept/concept-background.png"
-              alt="The Craft Lemon Sour ボトル" width="385" height="1389">
+            <img class="p-shop__image js-shop-image" src="src/assets/images/common/bottle-standard.png"
+              alt="The Craft Lemon Sour ボトル" width="330" height="970">
           </div>
 
           <!-- 右側（または下部）：テキストとボタン -->

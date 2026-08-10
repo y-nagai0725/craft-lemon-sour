@@ -7,16 +7,30 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import SplitText from 'gsap/SplitText';
 import { BREAKPOINTS, GSAP_CONFIG } from '../utils/constants.js';
 
-// GSAPプラグインの登録
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export const initFv = () => {
-  // テキストを1文字ずつ分割する処理
-  const splitTitle = SplitText.create('.js-fv-text', { type: 'chars' });
-  const chars = splitTitle.chars;
+  const fvSection = document.querySelector('.p-fv');
+  const catchText = document.querySelector('.js-fv-catch');
+  const titleText = document.querySelector('.js-fv-title');
+  const itemWraps = document.querySelectorAll('.js-fv-item-wrap');
+  const bottleItems = document.querySelectorAll('.js-fv-item-bottle');
+  const mainItem = document.querySelector('.js-fv-item-main');
+  const mainImage = document.querySelector('.js-fv-image-main');
 
-  // テキスト分割の親要素の非表示を解除
-  gsap.set('.js-fv-text', { autoAlpha: 1 });
+  // 要素が存在しない場合は処理を止める
+  if (!fvSection || !catchText || !titleText || itemWraps.length === 0 || bottleItems.length === 0 || !mainItem || !mainImage) return;
+
+  // テキストの分割と初期表示（キャッチコピーとタイトル両方を取得）
+  const splitTitle = SplitText.create([catchText, titleText], { type: 'chars' });
+  const chars = splitTitle.chars;
+  gsap.set([catchText, titleText], { autoAlpha: 1 });
+
+  // 各アイテムの初期配置（中央寄せ＋回転など）
+  gsap.set('.p-fv__item--bottle-rich', { xPercent: -50, yPercent: -50 });
+  gsap.set('.p-fv__item--bottle-standard', { xPercent: -50, yPercent: -50, rotation: -5 });
+  gsap.set('.p-fv__item--bottle-dry', { xPercent: -50, yPercent: -50, rotation: 8 });
+  gsap.set('.p-fv__item--main', { xPercent: -50, yPercent: -50 });
 
   const mm = gsap.matchMedia();
 
@@ -25,16 +39,18 @@ export const initFv = () => {
     isPc: `(width >= ${BREAKPOINTS.MD}px)`
   }, (context) => {
     let { isSp, isPc } = context.conditions;
-
     const tl = gsap.timeline();
 
+    // -----------------------------------
+    // 登場アニメーション
+    // -----------------------------------
     if (isSp) {
-      // -----------------------------------
       // SP表示：下からフワッっとフェードイン
-      // -----------------------------------
-      // テキストのアニメーション（1文字ずつ）
-      tl.fromTo(chars,
-        { y: 20, autoAlpha: 0 },
+      tl.fromTo(chars, // テキストは下から入ってくる（1文字ずつ）
+        {
+          y: 20,
+          autoAlpha: 0
+        },
         {
           y: 0,
           autoAlpha: 1,
@@ -42,63 +58,111 @@ export const initFv = () => {
           stagger: 0.05,
           ease: GSAP_CONFIG.EASE
         }
-      )
-        // 画像たちのアニメーション
-        .fromTo('.js-fv-item',
-          { y: 100, autoAlpha: 0 },
-          {
-            y: 0,
-            autoAlpha: 1,
-            duration: 1.0,
-            stagger: 0.1,
-            ease: GSAP_CONFIG.EASE
-          },
-          '-=0.4' // テキストが完全に終わる少し前に画像を出し始める
-        );
-
+      ).fromTo(itemWraps, // 画像も下からアニメーション
+        {
+          y: 60,
+          autoAlpha: 0
+        },
+        {
+          y: 0,
+          autoAlpha: 1,
+          duration: 1.0,
+          stagger: 0.1,
+          ease: GSAP_CONFIG.EASE
+        },
+        '-=0.4'
+      );
     } else {
-      // -----------------------------------
       // PC表示：左右からフェードイン
-      // -----------------------------------
-      // テキストは左から入ってくる（1文字ずつ）
-      tl.fromTo(chars,
-        { x: -20, autoAlpha: 0 },
+      tl.fromTo(chars, // テキストは左から入ってくる（1文字ずつ）
+        {
+          x: -20,
+          autoAlpha: 0
+        },
         {
           x: 0,
           autoAlpha: 1,
           duration: 0.6,
-          stagger: 0.035, // PCは文字が横に並ぶから少し早めにする
+          stagger: 0.035,
           ease: GSAP_CONFIG.EASE
         }
-      )
-        // 画像たちは右からフワッと迫ってくる
-        .fromTo('.js-fv-item',
-          { x: 50, autoAlpha: 0 },
-          {
-            x: 0,
-            autoAlpha: 1,
-            duration: 1.0,
-            stagger: 0.1,
-            ease: GSAP_CONFIG.EASE
-          },
-          '-=0.4'
-        );
+      ).fromTo(itemWraps, // 画像たちは右からフワッと迫ってくる
+        {
+          x: 40,
+          autoAlpha: 0
+        },
+        {
+          x: 0,
+          autoAlpha: 1,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: GSAP_CONFIG.EASE
+        },
+        '-=0.4'
+      );
     }
-  });
 
-  // スクロール連動のパララックス
-  const parallaxItems = document.querySelectorAll('.js-parallax');
-  parallaxItems.forEach(item => {
-    const speed = item.dataset.speed || 0.5;
-    gsap.to(item, {
-      y: () => -200 * speed,
-      ease: 'none',
+    // -----------------------------------
+    // マウス連動パララックス（PCのみ）
+    // -----------------------------------
+    if (isPc) {
+      fvSection.addEventListener('mousemove', (e) => {
+        const xPos = (e.clientX / window.innerWidth) - 0.5;
+        const yPos = (e.clientY / window.innerHeight) - 0.5;
+
+        // ボトルの動き
+        bottleItems.forEach(item => {
+          const speed = item.dataset.speed || 0.5;
+          gsap.to(item, {
+            x: xPos * 40 * speed,
+            y: yPos * 40 * speed,
+            duration: 0.6,
+            ease: 'power1.out'
+          });
+        });
+
+        // 主役のグラスは少しだけ逆に動かす
+        gsap.to(mainItem, {
+          x: xPos * -15,
+          y: yPos * -15,
+          duration: 0.8,
+          ease: 'power1.out'
+        });
+      });
+    }
+
+    // -----------------------------------
+    // スクロール連動パララックス
+    // -----------------------------------
+    const scrollTl = gsap.timeline({
       scrollTrigger: {
-        trigger: '.p-fv',
+        trigger: fvSection,
         start: 'top top',
         end: 'bottom top',
-        scrub: true
+        scrub: 1,
       }
     });
+
+    // 主役のグラス
+    scrollTl.to(mainImage, {
+      y: -150,
+      scale: 1.33,
+      ease: 'none'
+    }, 0);
+
+
+    // 奥のボトル画像たち
+    bottleItems.forEach(item => {
+      const speed = item.dataset.speed || 0.5;
+      const innerImage = item.querySelector('.js-fv-image-bottle');
+
+      if (innerImage) {
+        scrollTl.to(innerImage, {
+          y: -150 * speed,
+          ease: 'none'
+        }, 0);
+      }
+    });
+
   });
 };
