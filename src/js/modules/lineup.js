@@ -4,7 +4,7 @@
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { GSAP_CONFIG } from '../utils/constants.js';
+import { GSAP_CONFIG, BREAKPOINTS } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +20,17 @@ export const initLineup = () => {
   // 左に動かす「距離」を計算する関数
   const getScrollAmount = () => track.clientWidth - window.innerWidth;
 
+  // スクロール量（ScrollTrigger の end に設定する値）を計算
+  const getScrollEnd = () => {
+    // 基本のスクロール量
+    const baseAmount = getScrollAmount();
+
+    // SPの時はスクロール量を増やしてゆっくり見せる
+    // 画面幅がMD（768px）未満なら2倍、以上なら1倍（そのまま）にする
+    const multiplier = window.innerWidth < BREAKPOINTS.MD ? 2 : 1;
+    return `+=${baseAmount * multiplier}`;
+  };
+
   // ---------------------------------------------------
   // 横スクロールのアニメーション
   // ---------------------------------------------------
@@ -29,9 +40,9 @@ export const initLineup = () => {
     scrollTrigger: {
       trigger: trigger,
       pin: ".js-lineup-pin",
-      scrub: 1, // 1秒遅れで追従する
+      scrub: 1,
       start: 'top top',
-      end: () => `+=${getScrollAmount()}`,
+      end: getScrollEnd,
       invalidateOnRefresh: true,
     }
   });
@@ -45,7 +56,7 @@ export const initLineup = () => {
     scrollTrigger: {
       trigger: trigger,
       start: 'top top',
-      end: () => `+=${getScrollAmount()}`,
+      end: getScrollEnd,
       scrub: 1,
       invalidateOnRefresh: true,
     }
@@ -65,16 +76,18 @@ export const initLineup = () => {
 
   // .fromの共通設定
   const commonFrom = {
-    y: 60,
+    scale: 0.9,
+    filter: 'blur(8px)',
     autoAlpha: 0,
   };
 
   // .toの共通設定
   const commonTo = {
-    y: 0,
+    scale: 1,
+    filter: 'blur(0px)',
     autoAlpha: 1,
-    duration: 1.0,
-    ease: GSAP_CONFIG.EASE,
+    duration: 1.2,
+    ease: 'power2.out',
   };
 
   items.forEach((item, index) => {
