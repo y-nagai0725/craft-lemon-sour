@@ -4,8 +4,6 @@
   position: relative;
   padding: 10rem 0;
   overflow: hidden;
-  color: g.$color-light;
-  background-color: g.$color-dark;
 
   @include g.mq(md) {
     padding: 20rem 0;

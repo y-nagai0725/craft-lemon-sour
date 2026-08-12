@@ -3,7 +3,6 @@
 .p-concept {
   position: relative;
   overflow: hidden;
-  background-color: g.$color-dark;
 
   &__inner {
     @include g.contents-width;
@@ -63,8 +62,9 @@
     gap: 2.4rem;
 
     // SP時のみ、すりガラスのような背景を敷いて視認性を高める
-    padding: 2.4rem 0;
+    padding: 1.6rem;
     background-color: rgba(g.$color-dark, 0.33); // 半透明のダークネイビー
+    border-radius: 1.6rem;
     backdrop-filter: blur(0.3rem); // 後ろのボトルをぼかす
 
     @include g.mq(md) {
