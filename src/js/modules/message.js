@@ -1,3 +1,8 @@
+/**
+ * @file Messageセクション機能モジュール
+ * @description Messageセクションにおける背景画像のスクロール連動パララックス（縮小）と、テキストのクリップパスを用いた下からの出現アニメーションを管理します。
+ */
+
 // =========================================================================
 // message.js (Messageセクション用モジュール)
 // =========================================================================
@@ -8,6 +13,11 @@ import { GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Messageセクションのアニメーションを初期化する
+ * @description スクロール進捗に合わせて背景画像を元のサイズ（scale: 1）に戻すパララックスアニメーションと、`clip-path`を使用してテキストを下から滑らかにワイプインさせる演出を設定します。
+ * @returns {void}
+ */
 export const initMessage = () => {
   const section = document.querySelector('.js-message-section');
   const bg = document.querySelector('.js-message-bg');
