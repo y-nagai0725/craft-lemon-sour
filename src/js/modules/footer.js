@@ -1,3 +1,8 @@
+/**
+ * @file フッター機能モジュール
+ * @description フッター内のナビゲーションリンクからのスムーススクロール機能（クリック時点の動的なヘッダー高さを考慮したオフセット処理）を管理します。
+ */
+
 // =========================================================================
 // footer.js (フッター用機能モジュール)
 // =========================================================================
@@ -9,6 +14,11 @@ import { GSAP_CONFIG } from '../utils/constants.js';
 // GSAPプラグインの登録
 gsap.registerPlugin(ScrollToPlugin);
 
+/**
+ * フッター内のイベントリスナーを初期化する
+ * @description フッターのナビゲーションリンクに対し、クリック時に現在のヘッダー高さを動的に取得し、その分をオフセットとして考慮したページ内スムーススクロールを設定します。
+ * @returns {void}
+ */
 export const initFooter = () => {
   const footer = document.getElementById('js-footer');
   const navLinks = document.querySelectorAll('.js-footer-nav-link');
