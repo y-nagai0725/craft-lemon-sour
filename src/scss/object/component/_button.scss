@@ -1,3 +1,10 @@
+/**
+ * =========================================================================
+ * _button.scss
+ * @description 共通のボタンスタイル（コンポーネント）。基本形状やホバー時の背景色・影の変化（CSSトランジション）を定義します。座標移動はJS（マグネティック効果）で制御します。
+ * =========================================================================
+ */
+
 @use "sass:color";
 @use "../../global" as g;
 
@@ -10,7 +17,7 @@
   padding: 0 4rem;
   color: g.$color-dark;
   background-color: g.$color-primary;
-  border-radius: 10rem;
+  border-radius: 100vmax;
 
   // 背景色と影のホバー変化だけCSSで設定。座標の移動はGSAPに任せる
   transition:
@@ -23,7 +30,7 @@
   }
 
   &__text {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: g.$font-bold;
     letter-spacing: 0.05em;
   }

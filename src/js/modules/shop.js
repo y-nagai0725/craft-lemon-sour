@@ -1,3 +1,8 @@
+/**
+ * @file Shopセクション機能モジュール
+ * @description Shopセクション到達時のフェードインアニメーション、ボトル画像の浮遊アニメーション、およびPC環境向けのマグネティックボタン（吸い付くホバーエフェクト）を管理します。
+ */
+
 // =========================================================================
 // shop.js (Shopセクション用モジュール)
 // =========================================================================
@@ -8,6 +13,11 @@ import { GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Shopセクションのアニメーションを初期化する
+ * @description セクション内の画像とテキストの順次フェードイン、ボトル画像の無限上下移動（yoyo）、およびマウス操作が可能なデバイス（PC）限定のマグネティックボタンのイベントリスナーを設定します。
+ * @returns {void}
+ */
 export const initShop = () => {
   const section = document.querySelector('.p-shop');
   const imageWrap = document.querySelector('.js-shop-image-wrap');
