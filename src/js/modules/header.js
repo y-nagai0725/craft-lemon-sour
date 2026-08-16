@@ -1,3 +1,8 @@
+/**
+ * @file ヘッダー機能モジュール
+ * @description ヘッダーの初期出現アニメーション、ハンバーガーメニューの開閉制御、およびナビゲーションリンクからのスムーススクロール機能を管理します。
+ */
+
 // =========================================================================
 // header.js (ヘッダー機能モジュール)
 // =========================================================================
@@ -8,6 +13,11 @@ import { BREAKPOINTS, GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollToPlugin);
 
+/**
+ * ヘッダーのアニメーションとイベントを初期化する
+ * @description ページ読み込み時のヘッダー降下アニメーションを実行し、完了後にPromiseをresolveします。SP時のメニュー開閉処理、リサイズ時の状態リセット、ページ内リンクのスムーススクロール（ヘッダー高さ分のオフセット考慮）を設定します。
+ * @returns {Promise<void>} ヘッダーの出現アニメーションが完了したタイミングでresolveされるPromise
+ */
 export const initHeader = () => {
   return new Promise((resolve) => {
     const header = document.getElementById('js-header');
@@ -22,7 +32,10 @@ export const initHeader = () => {
 
     // ヘッダー出現アニメーション
     gsap.fromTo(header,
-      { yPercent: -100, autoAlpha: 0 },
+      {
+        yPercent: -100,
+        autoAlpha: 0
+      },
       {
         yPercent: 0,
         autoAlpha: 1,
@@ -43,8 +56,17 @@ export const initHeader = () => {
       duration: 0.3,
       ease: GSAP_CONFIG.EASE
     }).fromTo(navLinks,
-      { y: 20, autoAlpha: 0 },
-      { y: 0, autoAlpha: 1, duration: 0.3, stagger: 0.1, ease: GSAP_CONFIG.EASE },
+      {
+        y: 20,
+        autoAlpha: 0
+      },
+      {
+        y: 0,
+        autoAlpha: 1,
+        duration: 0.3,
+        stagger: 0.1,
+        ease: GSAP_CONFIG.EASE
+      },
       '-=0.15'
     );
 
