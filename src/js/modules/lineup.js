@@ -1,3 +1,8 @@
+/**
+ * @file Lineupセクション機能モジュール
+ * @description Lineupセクションにおける横スクロールアニメーション、スクロール連動型インジケーターの制御、および各アイテムの画面内進入に伴うフェードイン演出を管理します。
+ */
+
 // =========================================================================
 // lineup.js (Lineupセクション用モジュール)
 // =========================================================================
@@ -8,6 +13,11 @@ import { GSAP_CONFIG, BREAKPOINTS } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Lineupセクションのアニメーションを初期化する
+ * @description セクションをピン留めし、画面幅から算出した距離だけトラックを横方向へ動かすアニメーションを設定します。同時に、スクロール進捗に連動したインジケーターバーの伸縮や、横スクロール内で各アイテムが画面に入った瞬間の出現アニメーション（スケール＆ブラー解除）を実行します。
+ * @returns {void}
+ */
 export const initLineup = () => {
   const trigger = document.querySelector('.js-lineup-trigger');
   const track = document.querySelector('.js-lineup-track');
