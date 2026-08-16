@@ -1,3 +1,8 @@
+/**
+ * @file FV（ファーストビュー）機能モジュール
+ * @description FVセクションにおけるテキストの分割表示、SP/PCごとの登場演出、マウス連動パララックス、およびスクロール連動パララックスを管理します。
+ */
+
 // =========================================================================
 // fv.js (FV機能モジュール)
 // =========================================================================
@@ -9,6 +14,11 @@ import { BREAKPOINTS, GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
+/**
+ * FVセクションのアニメーションを初期化する
+ * @description テキストを1文字ずつ分割して表示するアニメーション、画面幅（SP/PC）に応じた各要素の登場アニメーション、およびPC専用のマウス追従パララックスとスクロール連動パララックスを設定します。
+ * @returns {void}
+ */
 export const initFv = () => {
   const fvSection = document.querySelector('.p-fv');
   const catchText = document.querySelector('.js-fv-catch');
