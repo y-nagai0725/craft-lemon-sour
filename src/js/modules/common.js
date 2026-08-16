@@ -1,6 +1,7 @@
-// =========================================================================
-// common.js (共通モジュール)
-// =========================================================================
+/**
+ * @file 全体共通のUIアニメーションや動作を管理するモジュール
+ * @description スムーススクロールや、ページトップへ戻るボタンの表示制御など、サイト全体で共通して使用されるUI機能を提供します。
+ */
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -9,6 +10,11 @@ import { GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+/**
+ * ページ最上部へのスムーススクロールを設定する
+ * @description `.js-scroll-top` クラスを持つ要素をクリックした際、GSAPのScrollToPluginを使用してスムーズに画面上部へスクロールさせます。
+ * @returns {void}
+ */
 export const initScrollTop = () => {
   const scrollTopLinks = document.querySelectorAll('.js-scroll-top');
 
@@ -29,6 +35,11 @@ export const initScrollTop = () => {
   });
 };
 
+/**
+ * ページトップへ戻るボタンの表示/非表示を制御する
+ * @description `#concept` セクションが画面内の指定位置に入ったタイミングで、`.js-pagetop` 要素に `is-active` クラスを付与/削除し、フェードイン・フェードアウトさせます。
+ * @returns {void}
+ */
 export const initPageTop = () => {
   const pagetop = document.querySelector('.js-pagetop');
 

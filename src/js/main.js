@@ -1,3 +1,8 @@
+/**
+ * @file サイト全体のエントリーポイント
+ * @description 各モジュールの読み込みと初期化処理を束ね、ページ読み込み完了時のローディング制御やアニメーションの実行順序を管理します。
+ */
+
 import '../scss/style.scss';
 import gsap from 'gsap';
 import { GSAP_CONFIG } from './utils/constants.js';
@@ -29,7 +34,11 @@ window.addEventListener('load', async () => {
   initFv();
 });
 
-// 処理をまとめて実行する初期化関数
+/**
+ * 各セクションのJSモジュールをまとめて初期化する
+ * @description ページトップへのスクロールや、各セクション（Concept, Process, Lineupなど）のスクロール連動アニメーションの初期化関数を呼び出します。FVとヘッダーはloadイベント内で別途順番に制御するためここには含めません。
+ * @returns {void}
+ */
 const init = () => {
   initScrollTop();
   initPageTop();

@@ -1,4 +1,10 @@
-@use '../global' as g;
+/**
+ * =========================================================================
+ * _base.scss
+ * @description サイト全体のベーススタイル（初期設定、基本タイポグラフィ、ローディング時のチラつき防止制御など）を定義します。
+ * =========================================================================
+ */
+@use "../global" as g;
 
 // ページ読み込み時はすべてのアニメーションを強制ストップ
 .preload * {
@@ -16,12 +22,18 @@ body {
   font-size: 1.4rem;
   line-height: 1.6;
   color: g.$color-light;
+  background-color: g.$color-dark;
 
   &.is-noscroll {
     overflow: hidden;
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: g.$font-bold;
 }
