@@ -1,6 +1,6 @@
 /**
  * @file Shopセクション機能モジュール
- * @description Shopセクション到達時のフェードインアニメーション、ボトル画像の浮遊アニメーション、およびPC環境向けのマグネティックボタン（吸い付くホバーエフェクト）を管理します。
+ * @description Shopセクション到達時のフェードインアニメーション（PC/SPでの個別制御）、ボトル画像の浮遊アニメーション、およびPC環境向けのマグネティックボタン（吸い付くホバーエフェクト）を管理します。
  */
 
 // =========================================================================
@@ -9,13 +9,13 @@
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { GSAP_CONFIG } from '../utils/constants.js';
+import { BREAKPOINTS, GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Shopセクションのアニメーションを初期化する
- * @description セクション内の画像とテキストの順次フェードイン、ボトル画像の無限上下移動（yoyo）、およびマウス操作が可能なデバイス（PC）限定のマグネティックボタンのイベントリスナーを設定します。
+ * @description 画面幅（SP/PC）に応じた画像とテキストの出現アニメーション（PCはタイムライン連携、SPは個別スクロール発火）、ボトル画像の無限上下移動、およびマウス操作が可能なデバイス（PC）限定のマグネティックボタンを設定します。
  * @returns {void}
  */
 export const initShop = () => {
@@ -43,26 +43,69 @@ export const initShop = () => {
     ease: GSAP_CONFIG.EASE,
   };
 
-  // タイムラインを使って画像→テキストの順番で登場させる
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: section,
-      start: 'top 65%',
-      toggleActions: 'play none none reverse',
+  const mm = gsap.matchMedia();
+
+  mm.add({
+    isSp: `(width < ${BREAKPOINTS.MD}px)`,
+    isPc: `(width >= ${BREAKPOINTS.MD}px)`
+  }, (context) => {
+    let { isSp, isPc } = context.conditions;
+
+    if (isPc) {
+      // PC時：横並びなのでタイムラインを使って画像→テキストの順番で登場させる
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 65%',
+          toggleActions: 'play none none reverse',
+        }
+      });
+
+      tl.fromTo(imageWrap, {
+        ...commonFrom
+      }, {
+        ...commonTo
+      })
+        .fromTo(textWrap, {
+          ...commonFrom
+        }, {
+          ...commonTo
+        },
+          '-=0.8');
+    } else {
+      // SP時：縦積みなので、画像とテキストを別々のトリガーで発火させる
+
+      // 画像のアニメーション
+      gsap.fromTo(imageWrap,
+        {
+          ...commonFrom
+        },
+        {
+          ...commonTo,
+          scrollTrigger: {
+            trigger: imageWrap,
+            start: 'top 70%',
+            toggleActions: 'play none none reverse',
+          }
+        }
+      );
+
+      // テキストのアニメーション
+      gsap.fromTo(textWrap,
+        {
+          ...commonFrom
+        },
+        {
+          ...commonTo,
+          scrollTrigger: {
+            trigger: textWrap,
+            start: 'top 70%',
+            toggleActions: 'play none none reverse',
+          }
+        }
+      );
     }
   });
-
-  tl.fromTo(imageWrap, {
-    ...commonFrom
-  }, {
-    ...commonTo
-  })
-    .fromTo(textWrap, {
-      ...commonFrom
-    }, {
-      ...commonTo
-    },
-      '-=0.8');
 
   // ---------------------------------------------------
   // ボトル画像アニメーション（ふわふわさせる）
@@ -78,7 +121,6 @@ export const initShop = () => {
   // ---------------------------------------------------
   // マグネティックボタン（吸い付くボタン）
   // ---------------------------------------------------
-  const mm = gsap.matchMedia();
 
   // マウスが使えるPC環境の時だけ実行する
   mm.add("(hover: hover) and (pointer: fine)", () => {
