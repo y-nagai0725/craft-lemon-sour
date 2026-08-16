@@ -1,3 +1,8 @@
+/**
+ * @file Processセクション機能モジュール
+ * @description Processセクション到達時の背景色・テキストカラーの反転アニメーションと、スクロールに連動した要素のフェードインアニメーションを管理します。
+ */
+
 // =========================================================================
 // process.js (Processセクション用モジュール)
 // =========================================================================
@@ -8,6 +13,11 @@ import { BREAKPOINTS, COLORS, GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Processセクションのアニメーションを初期化する
+ * @description セクション到達時に背景の専用レイヤー（.c-bg）とテキストを明るいテーマへ切り替えるタイムラインと、PC/SPのレイアウト差異を考慮したテキスト・画像の登場アニメーションを設定します。
+ * @returns {void}
+ */
 export const initProcess = () => {
   const globalBg = document.querySelector('.js-global-bg');
   const processSection = document.querySelector('.js-process-bg');
