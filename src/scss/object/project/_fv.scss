@@ -4,7 +4,6 @@
  * @description FV（ファーストビュー）セクションのスタイル。キャッチコピーやタイトルの配置、およびGSAPパララックスアニメーション用の各画像要素の絶対配置と初期非表示状態を定義します。
  * =========================================================================
  */
-
 @use "../../global" as g;
 
 .p-fv {
@@ -21,7 +20,7 @@
     @include g.contents-width;
 
     position: relative;
-    z-index: g.$z-index-fv-inner;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,7 +35,7 @@
 
   &__text-wrap {
     position: relative;
-    z-index: g.$z-index-fv-text;
+    z-index: 30;
     color: g.$color-light;
     text-align: center;
 

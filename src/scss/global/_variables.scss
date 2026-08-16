@@ -18,28 +18,25 @@ $font-bold: 700;
 
 // ブレイクポイント
 $breakpoints: (
-  "md": "(width >= 768px)",  // 768px以上（PC・タブレット用）
-  "lg": "(width >= 1024px)", // 1024px以上
-  "xl": "(width >= 1440px)"  // 1440px以上
+  // 768px以上（PC・タブレット用）
+  "md": "(width >= 768px)",
+  // 1024px以上
+  "lg": "(width >= 1024px)",
+  // 1440px以上
+  "xl": "(width >= 1440px)"
 );
 
 // Transition関連
 $transition-duration: 0.3s;
 $transition-easing: ease-out;
 
-// z-index TODO 随時追加していく
+// z-index
 $z-index-back: -1;
 $z-index-default: 1;
 $z-index-pagetop: 100;
 $z-index-header: 200;
 $z-index-nav: 205;
 $z-index-hamburger: 210;
-$z-index-fv-image-back: 5;
-$z-index-fv-inner: 10;
-$z-index-fv-image-main: 15;
-$z-index-fv-image-front-1: 20;
-$z-index-fv-image-front-2: 25;
-$z-index-fv-text: 30;
 
 // headerの高さ
 $header-height-sp: 6rem;
