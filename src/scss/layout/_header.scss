@@ -112,7 +112,8 @@
     z-index: g.$z-index-nav;
     visibility: hidden;
     width: 100%;
-    height: 100svh;
+    height: 100vh;  // 古いブラウザ用のフォールバック
+    height: 100lvh;
     background-color: g.$color-dark;
     opacity: 0;
 
