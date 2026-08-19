@@ -18,6 +18,8 @@
     - [デバイスに応じた登場アニメーション](#デバイスに応じた登場アニメーション)
     - [2つのパララックス（視差効果）による奥行きの演出](#2つのパララックス視差効果による奥行きの演出)
   - [Conceptセクション](#conceptセクション)
+    - [スクロール連動のPin留め（固定）アニメーション](#スクロール連動のpin留め固定アニメーション)
+    - [テキストのブラー演出と視認性への配慮](#テキストのブラー演出と視認性への配慮)
   - [Processセクション](#processセクション)
   - [Lineupセクション](#lineupセクション)
   - [Messageセクション](#messageセクション)
@@ -156,11 +158,27 @@ GSAPの `SplitText` プラグインを使用して、キャッチコピーとタ
 > * SCSS: [_fv.scss](src/scss/object/project/_fv.scss)
 
 ### Conceptセクション
-![Conceptセクションのwebp動画]()
+![ConceptセクションPC表示時画像](docs/concept/concept-pc.png)
 
->関連JSファイル: [concept.js](src/js/modules/concept.js)
+商品の魅力や世界観を伝えるConceptセクションです。商品ボトルを画面内に固定（Pin留め）したまま、テキストがスクロールして流れていくレイアウトを実装しています。
 
->関連SCSSファイル: [_concept.scss](src/scss/object/project/_concept.scss)
+#### スクロール連動のPin留め（固定）アニメーション
+GSAPの `ScrollTrigger` を使用し、ボトル画像の固定表示を実現しています。
+
+固定を開始する座標（`start`）は、JSで動的に取得したヘッダーの高さを加味（`top top+=${headerHeight}`）することで、ヘッダーの裏側に画像が隠れるのを防いでいます。
+
+また、`matchMedia` を用いて、PC表示では横並びを維持するために `pinSpacing: true`、SP表示ではテキストを画像の上に被せるために `pinSpacing: false` を指定し、デバイスごとに最適なレイアウト変化を制御しています。
+
+#### テキストのブラー演出と視認性への配慮
+テキストブロックが画面内に入った際、GSAPのタイムラインで `filter: blur(8px)` から `0px` へ変化させながら、見出しと説明文を時間差（`stagger: 0.2`）でフェードインさせるという演出を取り入れています。
+
+また、画像の上にテキストが重なるSP表示においては、SCSSでテキストブロックに `backdrop-filter: blur(0.3rem)` と半透明のダークネイビー背景を設定し、視認性の高いすりガラス風のスタイルを適用しています。
+
+![Conceptセクションのアニメーションwebp動画](docs/concept/concept-animation.webp)
+
+> 📂 **関連ファイル**
+> * JS: [concept.js](src/js/modules/concept.js)
+> * SCSS: [_concept.scss](src/scss/object/project/_concept.scss)
 
 ### Processセクション
 ![Processセクションのwebp動画]()
