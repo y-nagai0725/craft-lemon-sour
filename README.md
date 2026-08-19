@@ -21,6 +21,9 @@
     - [スクロール連動のPin留め（固定）アニメーション](#スクロール連動のpin留め固定アニメーション)
     - [テキストのブラー演出と視認性への配慮](#テキストのブラー演出と視認性への配慮)
   - [Processセクション](#processセクション)
+    - [スクロール連動のテーマ切り替え](#スクロール連動のテーマ切り替え)
+    - [`matchMedia` を用いたデバイスごとの発火タイミング最適化](#matchmedia-を用いたデバイスごとの発火タイミング最適化)
+    - [複数の画像を重ねたCSSレイアウト](#複数の画像を重ねたcssレイアウト)
   - [Lineupセクション](#lineupセクション)
   - [Messageセクション](#messageセクション)
   - [Shopセクション](#shopセクション)
@@ -183,11 +186,24 @@ GSAPの `ScrollTrigger` を使用し、ボトル画像の固定表示を実現�
 > * SCSS: [_concept.scss](src/scss/object/project/_concept.scss)
 
 ### Processセクション
-![Processセクションのwebp動画]()
+![ProcessセクションのPC表示時画像](docs/process/process-pc.png)
 
->関連JSファイル: [process.js](src/js/modules/process.js)
+商品のこだわりや製法を伝えるProcessセクションです。このセクションに到達した瞬間に、サイト全体のダークな雰囲気をパッと明るく切り替える演出を取り入れています。
 
->関連SCSSファイル: [_process.scss](src/scss/object/project/_process.scss)
+#### スクロール連動のテーマ切り替え
+GSAPの `ScrollTrigger` を活用し、セクションが画面の中央（`top 50%`）に到達したタイミングで、サイト全体を覆う背景レイヤー（`.c-bg`）を明るい色へ、そしてテキストを暗い色へとクロスフェードさせるタイムラインアニメーションを実装しています。`toggleActions: 'play reverse play reverse'` を指定することで、スクロールでセクションを通り過ぎたり上に戻ったりした際にも、何度でもシームレスにカラーが反転する仕様にしています。
+
+#### `matchMedia` を用いたデバイスごとの発火タイミング最適化
+PCとSPでのレイアウトの違い（横並びか縦積みか）にあわせて、アニメーションの発火タイミングを調整しています。GSAPの `matchMedia` を活用し、PC表示ではテキストと画像を一つのトリガーで一気に連続表示（`stagger`）させています。一方SP表示では、要素間の距離が長くなるため、テキストと画像エリアそれぞれに別々のスクロールトリガーを設定し、画面内に入ったベストなタイミングでアニメーションが発火するように制御しています。
+
+#### 複数の画像を重ねたCSSレイアウト
+「レモン」「麦」「熟成樽」の3枚の画像を、CSSの `position: absolute` と `z-index` を用いて立体的に重ね合わせたレイアウトを構築しています。さらに、それぞれの画像に対して `aspect-ratio` を用いて縦長（3:4）・正方形（1:1）・横長（4:3）と異なる比率でトリミングを行うことで、単調にならないビジュアルを表現しています。
+
+![Processセクションのアニメーションwebp動画](docs/process/process-animation.webp)
+
+> 📂 **関連ファイル**
+> * JS: [process.js](src/js/modules/process.js)
+> * SCSS: [_process.scss](src/scss/object/project/_process.scss)
 
 ### Lineupセクション
 ![Lineupセクションのwebp動画]()
