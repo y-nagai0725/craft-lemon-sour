@@ -36,7 +36,9 @@
     - [浮遊アニメーションとデバイス別発火制御](#浮遊アニメーションとデバイス別発火制御)
     - [触り心地を追求したマグネティックボタン](#触り心地を追求したマグネティックボタン)
   - [フッター](#フッター)
+    - [ヘッダー高さを考慮したスムーススクロール](#ヘッダー高さを考慮したスムーススクロール)
   - [トップへ戻るボタン](#トップへ戻るボタン)
+    - [スクロール進捗に合わせた表示制御と共通化](#スクロール進捗に合わせた表示制御と共通化)
 
 ## 概要
 架空のクラフトレモンサワー「The Craft Lemon Sour」のプロモーションを目的としたLPです。
@@ -278,7 +280,7 @@ LPの最終ゴールとなる、オンラインストアへの導線を配置し
 #### 触り心地を追求したマグネティックボタン
 購入ボタン（`.c-button`）には、PC環境（`(hover: hover) and (pointer: fine)`）限定で、マウスカーソルにボタンが吸い付く「マグネティック効果」をJavaScriptで実装しています。
 
-ボタンの中心座標とマウスカーソルの距離をリアルタイムに計算し、その距離の `0.3` 倍だけ要素を移動させることで自然な磁力感を表現しました。マウスが離れた際には、`elastic.out` イージングを用いて「ぽよんっ」と弾むように元の位置へ戻る、ユーザー体験を高めるインタラクションを取り入れています。
+ボタンの中心座標とマウスカーソルの距離をリアルタイムに計算し、その距離の `0.3` 倍だけ要素を移動させることで自然な磁力感を表現しました。マウスが離れた際には、`elastic.out` イージングを用いて「ぽよんっ」と弾むように元の位置へ戻る、ユーザー体験を高めるマイクロインタラクションを取り入れています。
 
 CSS側（[`_button.scss`](src/scss/object/component/_button.scss)）では背景色と影のホバー変化のみを担当させ、座標移動はGSAPに一任することで、役割を明確に分離しています。
 
@@ -290,15 +292,27 @@ CSS側（[`_button.scss`](src/scss/object/component/_button.scss)）では背景
 > * SCSS (ボタンコンポーネント): [_button.scss](src/scss/object/component/_button.scss)
 
 ### フッター
-![フッターのwebp動画]()
+![フッターのPC表示時画像](docs/footer/footer-pc.png)
 
->関連JSファイル: [footer.js](src/js/modules/footer.js)
+サイトの締めくくりとなるフッターセクションです。ダークトーンの背景を採用し、サイト全体のトンマナを統一しています。
 
->関連SCSSファイル: [_footer.scss](src/scss/layout/_footer.scss)
+#### ヘッダー高さを考慮したスムーススクロール
+フッター内の各ナビゲーションリンクをクリックした際、GSAPの `ScrollToPlugin` を用いて対象セクションへスムーススクロールさせます。この時、クリックした瞬間の固定ヘッダーの高さ（`offsetHeight`）を動的に取得し、その値を `offsetY` として設定することで、移動先のコンテンツがヘッダーに隠れてしまうのを防ぐ実装を行っています。
+
+> 📂 **関連ファイル**
+> * JS: [footer.js](src/js/modules/footer.js)
+> * SCSS: [_footer.scss](src/scss/layout/_footer.scss)
 
 ### トップへ戻るボタン
-![トップへ戻るボタンのwebp動画]()
+![トップへ戻るボタンのアニメーションwebp動画](docs/pagetop/pagetop-animation.webp)
 
->関連JSファイル: [common.js](src/js/modules/common.js)
+画面の右下に固定配置された、ページ最上部へ戻るためのUIコンポーネントです。上矢印はCSSの疑似要素（`::before`）と `border` の回転（`rotate(45deg)`）のみで軽量に実装し、ホバー時には少し浮き上がる（`translateY(-4px)`）マイクロインタラクションを設定しています。
 
->関連SCSSファイル: [_pagetop.scss](src/scss/object/component/_pagetop.scss)
+#### スクロール進捗に合わせた表示制御と共通化
+FVの閲覧を邪魔しないよう、初期状態では非表示（`opacity: 0`, `visibility: hidden`）にしています。GSAPの `ScrollTrigger` を用いて、ユーザーが下にスクロールしてConceptセクションが見え始めたタイミングで `.is-active` クラスを付与し、フワッとフェードインさせる制御を行っています。
+
+また、クリック時のページ最上部（`scrollTo: 0`）への移動処理は、ロゴ部分などでも再利用できるよう共通のモジュール（`initScrollTop`）として切り出し、メンテナンス性を高めています。
+
+> 📂 **関連ファイル**
+> * JS (共通UI機能): [common.js](src/js/modules/common.js)
+> * SCSS: [_pagetop.scss](src/scss/object/component/_pagetop.scss)
