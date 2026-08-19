@@ -172,9 +172,11 @@ GSAPの `ScrollTrigger` を使用し、ボトル画像の固定表示を実現�
 #### テキストのブラー演出と視認性への配慮
 テキストブロックが画面内に入った際、GSAPのタイムラインで `filter: blur(8px)` から `0px` へ変化させながら、見出しと説明文を時間差（`stagger: 0.2`）でフェードインさせるという演出を取り入れています。
 
+![Conceptセクションのアニメーションwebp動画](docs/concept/concept-animation.webp)
+
 また、画像の上にテキストが重なるSP表示においては、SCSSでテキストブロックに `backdrop-filter: blur(0.3rem)` と半透明のダークネイビー背景を設定し、視認性の高いすりガラス風のスタイルを適用しています。
 
-![Conceptセクションのアニメーションwebp動画](docs/concept/concept-animation.webp)
+![ConceptセクションSP表示時画像](docs/concept/concept-sp.png)
 
 > 📂 **関連ファイル**
 > * JS: [concept.js](src/js/modules/concept.js)
