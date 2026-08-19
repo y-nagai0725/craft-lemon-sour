@@ -33,6 +33,8 @@
     - [`clip-path` を用いたワイプイン演出と細部へのこだわり](#clip-path-を用いたワイプイン演出と細部へのこだわり)
     - [疑似要素を用いた可読性の担保](#疑似要素を用いた可読性の担保)
   - [Shopセクション](#shopセクション)
+    - [浮遊アニメーションとデバイス別発火制御](#浮遊アニメーションとデバイス別発火制御)
+    - [触り心地を追求したマグネティックボタン](#触り心地を追求したマグネティックボタン)
   - [フッター](#フッター)
   - [トップへ戻るボタン](#トップへ戻るボタン)
 
@@ -264,11 +266,28 @@ PCとSPでのレイアウトの違い（横並びか縦積みか）にあわせ�
 > * SCSS: [_message.scss](src/scss/object/project/_message.scss)
 
 ### Shopセクション
-![Shopセクションのwebp動画]()
+![ShopセクションのPC表示時画像](docs/shop/shop-pc.png)
 
->関連JSファイル: [shop.js](src/js/modules/shop.js)
+LPの最終ゴールとなる、オンラインストアへの導線を配置したセクションです。商品画像と購入ボタンに対して、ユーザーの目を惹きつけ、つい触りたくなるようなインタラクションを実装しています。
 
->関連SCSSファイル: [_shop.scss](src/scss/object/project/_shop.scss) / [_button.scss](src/scss/object/component/_button.scss)
+#### 浮遊アニメーションとデバイス別発火制御
+商品ボトルに対して、GSAPの `repeat: -1` と `yoyo: true`、そして `sine.inOut` のイージングを組み合わせることで、宙に浮いているかのような滑らかな無限上下アニメーションを実装しています。
+
+また、要素の出現アニメーションにおいては `matchMedia` を活用し、PC（横並び）の際はタイムライン（`gsap.timeline`）で画像からテキストへと連続表示させ、SP（縦積み）の際は各要素が画面内に入ったベストなタイミングでスクロール発火するように個別にトリガーを設定してアニメーションを制御しています。
+
+#### 触り心地を追求したマグネティックボタン
+購入ボタン（`.c-button`）には、PC環境（`(hover: hover) and (pointer: fine)`）限定で、マウスカーソルにボタンが吸い付く「マグネティック効果」をJavaScriptで実装しています。
+
+ボタンの中心座標とマウスカーソルの距離をリアルタイムに計算し、その距離の `0.3` 倍だけ要素を移動させることで自然な磁力感を表現しました。マウスが離れた際には、`elastic.out` イージングを用いて「ぽよんっ」と弾むように元の位置へ戻る、ユーザー体験を高めるインタラクションを取り入れています。
+
+CSS側（[`_button.scss`](src/scss/object/component/_button.scss)）では背景色と影のホバー変化のみを担当させ、座標移動はGSAPに一任することで、役割を明確に分離しています。
+
+![Shopセクションのアニメーションwebp動画](docs/shop/shop-animation.webp)
+
+> 📂 **関連ファイル**
+> * JS: [shop.js](src/js/modules/shop.js)
+> * SCSS (レイアウト): [_shop.scss](src/scss/object/project/_shop.scss)
+> * SCSS (ボタンコンポーネント): [_button.scss](src/scss/object/component/_button.scss)
 
 ### フッター
 ![フッターのwebp動画]()
