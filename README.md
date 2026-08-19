@@ -25,6 +25,9 @@
     - [`matchMedia` を用いたデバイスごとの発火タイミング最適化](#matchmedia-を用いたデバイスごとの発火タイミング最適化)
     - [複数の画像を重ねたCSSレイアウト](#複数の画像を重ねたcssレイアウト)
   - [Lineupセクション](#lineupセクション)
+    - [ユーザビリティを考慮した横スクロール制御](#ユーザビリティを考慮した横スクロール制御)
+    - [`containerAnimation` を用いた発火トリガー](#containeranimation-を用いた発火トリガー)
+    - [スクロール進捗インジケーターとPC表示向け装飾](#スクロール進捗インジケーターとpc表示向け装飾)
   - [Messageセクション](#messageセクション)
   - [Shopセクション](#shopセクション)
   - [フッター](#フッター)
@@ -206,11 +209,34 @@ PCとSPでのレイアウトの違い（横並びか縦積みか）にあわせ�
 > * SCSS: [_process.scss](src/scss/object/project/_process.scss)
 
 ### Lineupセクション
-![Lineupセクションのwebp動画]()
+![LineupセクションのPC表示時画像](docs/lineup/lineup-pc.png)
 
->関連JSファイル: [lineup.js](src/js/modules/lineup.js)
+商品の3つのフレーバー（Standard / Dry / Rich）を紹介するセクションです。縦スクロールの操作で画面が横にスライドしていく、インタラクティブなレイアウトを実装しています。
 
->関連SCSSファイル: [_lineup.scss](src/scss/object/project/_lineup.scss)
+#### ユーザビリティを考慮した横スクロール制御
+セクション全体を `ScrollTrigger` で画面にピン留めし、横並びの商品要素のコンテナの幅とウィンドウ幅から算出した距離分だけ要素を横（`x` 方向）に移動させるアニメーションを実装しています。
+
+特にこだわった点として、SP環境では画面幅が狭く横スクロールが一瞬で終わってしまうのを防ぐため、`matchMedia` のブレイクポイント判定を利用してスクロール量（`ScrollTrigger` の `end` 値）をPCの2倍に設定し、スマートフォンでもゆったりと商品を閲覧できるように調整しています。
+
+#### `containerAnimation` を用いた発火トリガー
+各アイテムが画面に登場する際、`filter: blur(8px)` や `scale: 0.9` から本来の姿へフェードインする演出を取り入れています。
+
+1つ目のアイテムは通常の縦スクロールで発火させますが、2つ目以降のアイテムはGSAPの `containerAnimation` プロパティを活用し、横スクロールのアニメーションと連動させています。これにより、「横に流れてきて画面右側（`left 80%`）に入った瞬間」という発火タイミングを正確に制御しています。
+
+#### スクロール進捗インジケーターとPC表示向け装飾
+* **連動型インジケーター**
+
+  画面下部に配置した3つのバーが、スクロールの進行度に合わせて左から右へ伸びる（`transform: scaleX(1)`）アニメーションを実装し、ユーザーに現在地を視覚的に伝えています。
+
+* **巨大な透かしナンバリング**
+
+  大きめの画面幅のあるPC表示（`1440px`以上）向けに、HTMLの `data-num` 属性を活用した装飾を施しています。SCSSの `content: attr(data-num)` と `::before` 疑似要素を用いて、巨大な透かし数字を配置し、LP全体の高級感をさらに引き立てています。
+
+![Lineupセクションのアニメーションwebp動画](docs/lineup/lineup-animation.webp)
+
+> 📂 **関連ファイル**
+> * JS: [lineup.js](src/js/modules/lineup.js)
+> * SCSS: [_lineup.scss](src/scss/object/project/_lineup.scss)
 
 ### Messageセクション
 ![Messageセクションのwebp動画]()
