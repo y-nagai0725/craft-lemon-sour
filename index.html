@@ -38,7 +38,23 @@
     rel="stylesheet">
 </head>
 
-<body class="preload">
+<body class="preload is-noscroll">
+
+  <!-- OPアニメーション用レイヤー -->
+  <div class="p-opener" id="js-opener">
+    <div class="p-opener__inner">
+      <!-- SVGロゴ -->
+      <img src="src/assets/images/common/op-logo.svg" alt="The Craft Lemon Sour" class="p-opener__logo js-opener-logo">
+
+      <!-- 3つのドット -->
+      <div class="p-opener__dots">
+        <span class="p-opener__dot js-opener-dot"></span>
+        <span class="p-opener__dot js-opener-dot"></span>
+        <span class="p-opener__dot js-opener-dot"></span>
+      </div>
+    </div>
+  </div>
+
   <div class="l-wrapper">
 
     <!-- サイト全体の背景専用レイヤー -->
@@ -174,8 +190,8 @@
             </div>
             <!-- 麦画像（左下） -->
             <div class="p-process__image-wrap p-process__image-wrap--barley js-process-image">
-              <img class="p-process__image" src="src/assets/images/process/process-barley.jpg" alt="麦" width="800" height="600"
-                loading="lazy" decoding="async">
+              <img class="p-process__image" src="src/assets/images/process/process-barley.jpg" alt="麦" width="800"
+                height="600" loading="lazy" decoding="async">
             </div>
             <!-- 樽画像（右下・一番奥） -->
             <div class="p-process__image-wrap p-process__image-wrap--barrel js-process-image">

@@ -6,8 +6,8 @@
  */
 @use "../global" as g;
 
-// ページ読み込み時はすべてのアニメーションを強制ストップ
-.preload * {
+// ページ読み込み時はOPアニメーション以外のすべてのアニメーションを強制ストップ
+.preload .l-wrapper * {
   transition: none !important;
   animation: none !important;
 }

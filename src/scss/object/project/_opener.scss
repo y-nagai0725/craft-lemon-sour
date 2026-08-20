@@ -1,0 +1,57 @@
+/**
+ * =========================================================================
+ * _opener.scss
+ * @description OPアニメーション要素のスタイル。ロゴ画像、アニメーション用のドットのスタイルを定義します。
+ * =========================================================================
+ */
+
+@use "../../global" as g;
+
+.p-opener {
+  position: fixed;
+  inset: 0;
+  z-index: g.$z-index-opener;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100lvh;
+  background-color: g.$color-dark;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 3.2rem;
+    align-items: center;
+  }
+
+  &__logo {
+    width: 14rem;
+    height: auto;
+
+    @include g.mq(md) {
+      width: 16rem;
+    }
+  }
+
+  &__dots {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  &__dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    background-color: g.$color-primary;
+    border-radius: 50%;
+  }
+
+  // =========================================================================
+  // GSAPアニメーション用の初期状態（FOUC対策）
+  // =========================================================================
+  &__logo,
+  &__dot {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
