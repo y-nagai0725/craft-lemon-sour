@@ -1,6 +1,6 @@
 /**
  * @file Conceptセクション機能モジュール
- * @description Conceptセクションにおける、ボトルの固定（Pin留め）アニメーションと、スクロールに連動したテキストブロックのフェードイン/ブラー演出を管理します。
+ * @description Conceptセクションにおける、スクロールに連動したボトル画像のフェードイン・テキストブロックのフェードイン/ブラー演出を管理します。
  */
 
 // =========================================================================
@@ -9,20 +9,26 @@
 
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { BREAKPOINTS, GSAP_CONFIG } from '../utils/constants.js';
+import { GSAP_CONFIG } from '../utils/constants.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Conceptセクションのアニメーションを初期化する
- * @description ボトル画像の下からのフェードイン、画面幅に応じたヘッダー高さを考慮したボトルのPin留め（スクロール追従）、および各テキストブロックの順次フェードイン（ブラー効果付き）を設定します。
+ * @description ボトル画像の下からのフェードイン、および各テキストブロックの順次フェードイン（ブラー効果付き）を設定します。
  * @returns {void}
  */
 export const initConcept = () => {
+  const bottleImage = document.querySelector('.js-bottle-image');
+  const blocks = document.querySelectorAll('.js-concept-text');
+
+  // 要素が存在しない場合は処理を止める
+  if (!bottleImage || blocks.length === 0) return;
+
   // ------------------------------
   // ボトルの登場アニメーション
   // ------------------------------
-  gsap.fromTo('.js-bottle-image', {
+  gsap.fromTo(bottleImage, {
     y: 80, // 下から少しゆったりと
     autoAlpha: 0
   }, {
@@ -36,76 +42,48 @@ export const initConcept = () => {
     }
   });
 
-  const mm = gsap.matchMedia();
+  // ------------------------------
+  // テキストブロックのフェードイン
+  // ------------------------------
+  blocks.forEach((block) => {
+    // ブロックの中にあるタイトルと説明文を取得する
+    const title = block.querySelector('.p-concept__title');
+    const desc = block.querySelector('.p-concept__desc');
 
-  mm.add({
-    isSp: `(width < ${BREAKPOINTS.MD}px)`,
-    isPc: `(width >= ${BREAKPOINTS.MD}px)`
-  }, (context) => {
-    let { isSp, isPc } = context.conditions;
-
-    // ヘッダー要素を取得
-    const header = document.getElementById('js-header');
-
-    // headerが存在すれば高さを取得、なければ予備としてSCSSの固定値を使う
-    const headerHeight = header ? header.offsetHeight : (isPc ? 80 : 60);
-
-    // ------------------------------
-    // ボトルのPin留め（固定）
-    // ------------------------------
-    ScrollTrigger.create({
-      trigger: '.p-concept',
-      start: `top top+=${headerHeight}`, // ヘッダーの下端に触れたらスタート
-      end: 'bottom bottom', // セクションの最後まで固定
-      pin: '.js-pin-bottle',
-      pinSpacing: isPc ? true : false, // SP時はテキストを上に被せるためにfalse、PC時は横並びを維持するためにtrueにする
+    // タイムラインを作成
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: block,
+        start: 'top 70%',
+        toggleActions: 'play none none reverse',
+      }
     });
 
-    // ------------------------------
-    // テキストブロックのフェードイン
-    // ------------------------------
-    const blocks = document.querySelectorAll('.js-concept-text');
-
-    blocks.forEach((block) => {
-      // ブロックの中にあるタイトルと説明文を取得する
-      const title = block.querySelector('.p-concept__title');
-      const desc = block.querySelector('.p-concept__desc');
-
-      // タイムラインを作成
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: block,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
-        }
-      });
-
-      // ブロック全体をフェードイン
-      tl.fromTo(block,
+    // ブロック全体をフェードイン
+    tl.fromTo(block,
+      {
+        autoAlpha: 0
+      },
+      {
+        autoAlpha: 1, duration: 0.6, ease: GSAP_CONFIG.EASE
+      }
+    )
+      // タイトルと説明文に「ぼかし(blur)」をかけながら下から順番に表示
+      .fromTo([title, desc],
         {
-          autoAlpha: 0
+          y: 30,
+          autoAlpha: 0,
+          filter: 'blur(8px)'
         },
         {
-          autoAlpha: 1, duration: 0.6, ease: GSAP_CONFIG.EASE
-        }
-      )
-        // タイトルと説明文に「ぼかし(blur)」をかけながら下から順番に表示
-        .fromTo([title, desc],
-          {
-            y: 30,
-            autoAlpha: 0,
-            filter: 'blur(8px)'
-          },
-          {
-            y: 0,
-            autoAlpha: 1,
-            filter: 'blur(0px)',
-            duration: 1.0,
-            stagger: 0.2,
-            ease: GSAP_CONFIG.EASE
-          },
-          '-=0.4' // 背景が完全に出る少し前にテキストを出し始める
-        );
-    });
+          y: 0,
+          autoAlpha: 1,
+          filter: 'blur(0px)',
+          duration: 1.0,
+          stagger: 0.2,
+          ease: GSAP_CONFIG.EASE
+        },
+        '-=0.4' // 背景が完全に出る少し前にテキストを出し始める
+      );
   });
 };
